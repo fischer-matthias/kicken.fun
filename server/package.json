@@ -10,6 +10,7 @@
   "author": "Matthias Fischer",
   "license": "ISC",
   "dependencies": {
+    "find-child-node": "0.0.1",
     "http": "0.0.0",
     "parse5": "^4.0.0"
   }
