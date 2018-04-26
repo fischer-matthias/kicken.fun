@@ -23,7 +23,7 @@ module.exports = () => {
 
             const teamKaderContainerNode = findChildNode.byClass(htmlObj.childNodes, 'team_kader_container');
             if(teamKaderContainerNode == null) {
-                reject('team_kader_container node not available');
+                reject('Team wurde nicht gefunden.');
             }
 
             teamKaderContainerNode.childNodes.forEach((node) => {
@@ -62,11 +62,20 @@ module.exports = () => {
                         player.kader_seit = node.childNodes[0].value;
                         break;
                     case 'team_verletzt':
-                        player.verletzt = (node.childNodes[0].value == ' ' ? false : true);
+                        if(node.childNodes[1]) {
+                            player.verletzt = true;
+                        } else {
+                            player.verletzt = false;
+                        }
                         break;
                     case 'team_sperre':
-                        player.sperre = (node.childNodes[0].value == ' ' ? false : true);
+                        if(node.childNodes[1]) {
+                            player.sperre = true;
+                        } else {
+                            player.sperre = false;
+                        }
                         break;
+                    case '':
                 }
             }
         });

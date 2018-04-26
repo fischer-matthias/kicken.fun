@@ -1,8 +1,17 @@
-var fs = require('fs');
-var util = require('util')
+// imports
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
 
-const fupaParser = require('./logic/fupa-parser.js')();
+// register routes
+app.use('/players/', require('./api/routes/players')().routes);
 
-fupaParser.getPlayersOfTeam('tus-bersenbrueck', 'm2')
-    .then((result) => console.log(result))
-    .catch((error) => console.log(error));
+var port = 8080;
+if(process.argv[2] !== undefined && process.argv[2] !== null) {
+    port = process.argv[2];
+}
+
+// start webserver
+http.listen(port, () => {
+    console.log('Started webserver on port ' + port + '.')
+});
