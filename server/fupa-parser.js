@@ -19,46 +19,59 @@ module.exports = () => {
     function parseHTML(rawHTML) {
         return new Promise((resolve, reject) => {
             const htmlObj = parse5.parse(rawHTML);
-            const htmlNode = htmlObj.childNodes[1];
-            const bodyNode = htmlNode.childNodes[2];
+            var players = [];
 
-            const mainNode = findChildNode.byClass(bodyNode.childNodes, 'main');
-            if(mainNode == null) {
-                reject('main node not available');
-            }
-
-            const pageNode = findChildNode.byClass(mainNode.childNodes, 'page');
-            if(pageNode == null) {
-                reject('page node not available');
-            }
-
-            const pageWrapperNode = findChildNode.byId(pageNode.childNodes, 'ip_page_wrapper');
-            if(pageWrapperNode == null) {
-                reject('page_wrapper node not available');
-            }
-
-            const contentWrapperNode = findChildNode.byId(pageWrapperNode.childNodes, 'ip_content_wrapper');
-            if(contentWrapperNode == null) {
-                reject('content_wrapper node not available');
-            }
-
-            const contentNode = findChildNode.byClass(contentWrapperNode.childNodes, 'content');
-            if(contentNode == null) {
-                reject('content node not available');
-            }
-
-            const contentStandardNode = findChildNode.byClass(contentNode.childNodes, 'content_standard');
-            if(contentStandardNode == null) {
-                reject('content_standard node not available');
-            }
-
-            const teamKaderContainerNode = findChildNode.byClass(contentStandardNode.childNodes, 'team_kader_container');
+            const teamKaderContainerNode = findChildNode.byClass(htmlObj.childNodes, 'team_kader_container');
             if(teamKaderContainerNode == null) {
                 reject('team_kader_container node not available');
             }
 
-            resolve(teamKaderContainerNode);
+            teamKaderContainerNode.childNodes.forEach((node) => {
+                if(node.nodeName == 'a') {
+                    var playerInfo = findChildNode.byClass(node.childNodes, 'team_kader_info');
+                    var player = parsePlayerInfo(playerInfo);
+                    players.push(player);
+                }
+            });
+
+            resolve(players);
         });
+    }
+
+    /**
+     * Converts an PlayerInfoObject-HTML Objekt to a player object
+     * @param {JSON} playerInfoObject
+     * @return {Object} player
+     */
+    function parsePlayerInfo(playerInfoObject) {  
+        var player = {};
+        
+        playerInfoObject.childNodes.forEach((node) => {
+            if(node.attrs && node.attrs[0]) {
+                switch(node.attrs[0].value) {
+                    case 'name':
+                        player.name = node.childNodes[0].value;
+                        break;
+                    case 'vorname':
+                        player.vorname = node.childNodes[0].value;
+                        break;
+                    case 'alter':
+                        player.alter = node.childNodes[0].value;
+                        break;
+                    case 'team_kader_seit':
+                        player.kader_seit = node.childNodes[0].value;
+                        break;
+                    case 'team_verletzt':
+                        player.verletzt = (node.childNodes[0].value == ' ' ? false : true);
+                        break;
+                    case 'team_sperre':
+                        player.sperre = (node.childNodes[0].value == ' ' ? false : true);
+                        break;
+                }
+            }
+        });
+
+        return player;
     }
 
     /**
