@@ -3,4 +3,4 @@ Is an offline application that is able to record game information without the ne
 
 ## Features
 - Countdown
-- save player statistics like goals, assists and cards.
+- Save player statistics like goals, assists and cards.
