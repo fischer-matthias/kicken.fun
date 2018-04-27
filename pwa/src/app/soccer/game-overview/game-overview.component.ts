@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Player } from '../models/player';
+import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'soccer-game-overview',
@@ -11,7 +13,9 @@ export class GameOverviewComponent implements OnInit {
   private club: string;
   private team: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  private players: Player[];
+
+  constructor(private router: Router, private route: ActivatedRoute, private playerService: PlayerService) { }
 
   ngOnInit() {
     this.route.queryParams
@@ -21,7 +25,15 @@ export class GameOverviewComponent implements OnInit {
         } else {
           this.club = params.club;
           this.team = params.team;
+          this.loadPlayers();
         }
+      });
+  }
+
+  private loadPlayers(): void {
+    this.playerService.getPlayers(this.club, this.team)
+      .subscribe(data => {
+        console.log(data);
       });
   }
 

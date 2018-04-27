@@ -2,12 +2,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatSelectModule, MatDividerModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatSelectModule, MatDividerModule, MatListModule } from '@angular/material';
 
 // provide services
 import { ClubService } from './club.service';
+import { PlayerService } from './player.service';
 
 // declare components
 import { HomeComponent } from './home/home.component';
@@ -27,14 +29,16 @@ export const soccerRoutes = [
     CommonModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(soccerRoutes),
+    HttpClientModule,
 
     MatToolbarModule,
     MatCardModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatListModule
   ],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent],
-  providers: [ClubService],
+  providers: [ClubService, PlayerService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }
