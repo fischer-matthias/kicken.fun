@@ -1,6 +1,7 @@
 {
-  "name": "soccer-pwa",
-  "version": "0.0.0",
+  "name": "soccer-pwa-client",
+  "version": "0.0.1",
+  "description": "Soccer PWA that is able to record game information",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
