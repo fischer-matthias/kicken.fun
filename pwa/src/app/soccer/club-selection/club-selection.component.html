@@ -10,10 +10,20 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <p>You selected: {{selectedClub?.value}}</p>
+
+    <mat-divider *ngIf="selectedClub"></mat-divider>
+
+    <mat-form-field *ngIf="selectedClub">
+      <mat-select placeholder="Team" [(value)]="selectedTeam">
+        <mat-option *ngFor="let team of selectedClub.teams" [value]="team">
+          {{ team }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
+    <button *ngIf="!selectedClub || !selectedTeam" mat-button disabled>Start game</button>
+    <button *ngIf="selectedClub && selectedTeam" mat-button (click)="startGame()">Start game</button>
   </mat-card-actions>
 </mat-card>

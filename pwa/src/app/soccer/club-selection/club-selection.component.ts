@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from "../models/club";
 import { ClubService } from '../club.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'soccer-club-selection',
@@ -11,8 +12,9 @@ export class ClubSelectionComponent implements OnInit {
 
   public clubs: Club[];
   public selectedClub: Club;
+  public selectedTeam: string;
 
-  constructor(private clubService: ClubService) { }
+  constructor(private clubService: ClubService, private router: Router) { }
 
   ngOnInit() {
     this.clubService.getClubsMock()
@@ -22,6 +24,11 @@ export class ClubSelectionComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  public startGame(): void {
+    console.log('Route to /game-overview.');
+    this.router.navigate(['/game-overview']);
   }
 
 }
