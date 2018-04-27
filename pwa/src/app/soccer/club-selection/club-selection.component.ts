@@ -28,7 +28,7 @@ export class ClubSelectionComponent implements OnInit {
 
   public startGame(): void {
     console.log('Route to /game-overview.');
-    this.router.navigate(['/game-overview']);
+    this.router.navigate(['/game-overview'], { queryParams: { club: this.selectedClub.key, team: this.selectedTeam } });
   }
 
 }
