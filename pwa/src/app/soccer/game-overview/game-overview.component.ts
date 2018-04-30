@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from '../models/player';
 import { PlayerService } from '../player.service';
+import { StopWatchService } from '../stop-watch.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'soccer-game-overview',
@@ -15,7 +17,11 @@ export class GameOverviewComponent implements OnInit {
 
   private players: Player[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private playerService: PlayerService) { }
+  private timeObservable: Observable<Number>;
+  private timeInSeconds: Number = 0;
+
+  constructor(private router: Router, private route: ActivatedRoute,
+      private playerService: PlayerService, private stopWatch: StopWatchService) { }
 
   ngOnInit() {
     this.route.queryParams
@@ -28,6 +34,11 @@ export class GameOverviewComponent implements OnInit {
           this.loadPlayers();
         }
       });
+
+    this.timeObservable = this.stopWatch.getObservable();
+    this.timeObservable.subscribe((value) => {
+      this.timeInSeconds = value;
+    });
   }
 
   private loadPlayers(): void {
@@ -36,6 +47,10 @@ export class GameOverviewComponent implements OnInit {
         this.players = data as Player[];
         console.log(data);
       });
+  }
+
+  public startTimer(): void {
+    this.stopWatch.startTimer();
   }
 
 }

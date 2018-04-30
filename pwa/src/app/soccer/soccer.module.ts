@@ -10,11 +10,13 @@ import { MatToolbarModule, MatCardModule, MatSelectModule, MatDividerModule, Mat
 // provide services
 import { ClubService } from './club.service';
 import { PlayerService } from './player.service';
+import { StopWatchService } from './stop-watch.service';
 
 // declare components
 import { HomeComponent } from './home/home.component';
 import { ClubSelectionComponent } from './club-selection/club-selection.component';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
+import { TimePipe } from './time.pipe';
 
 // declare routes
 export const soccerRoutes = [
@@ -37,8 +39,8 @@ export const soccerRoutes = [
     MatDividerModule,
     MatListModule
   ],
-  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent],
-  providers: [ClubService, PlayerService],
+  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
+  providers: [ClubService, PlayerService, StopWatchService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }

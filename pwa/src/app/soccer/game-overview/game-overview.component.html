@@ -1,3 +1,8 @@
+<mat-card class="score-board">
+  <h1>{{timeInSeconds | soccerTime}}</h1>
+  <button mat-button (click)="startTimer()">Start</button>
+</mat-card>
+
 <mat-list>
   <mat-list-item *ngFor="let player of players">
     <h4 mat-line>{{player.vorname}} {{player.name}} ({{player.alter}})</h4>
