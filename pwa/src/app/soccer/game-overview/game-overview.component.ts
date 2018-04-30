@@ -33,6 +33,7 @@ export class GameOverviewComponent implements OnInit {
   private loadPlayers(): void {
     this.playerService.getPlayers(this.club, this.team)
       .subscribe(data => {
+        this.players = data as Player[];
         console.log(data);
       });
   }

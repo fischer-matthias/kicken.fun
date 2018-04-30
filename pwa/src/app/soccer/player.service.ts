@@ -13,7 +13,7 @@ export class PlayerService {
   public getPlayers(club: string, team: string): Observable<Object> {
     
     return this.httpClient
-      .get('https://ma.tthias.space/fussball/players/' + club + '/' + team);
+      .get('http://localhost:8888/players/' + club + '/' + team);
   }
 
 }
