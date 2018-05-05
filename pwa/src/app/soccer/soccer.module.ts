@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatSelectModule, MatDividerModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule } from '@angular/material';
 
 // provide services
 import { ClubService } from './club.service';
@@ -34,6 +34,7 @@ export const soccerRoutes = [
     HttpClientModule,
 
     MatToolbarModule,
+    MatButtonModule,
     MatCardModule,
     MatSelectModule,
     MatDividerModule,

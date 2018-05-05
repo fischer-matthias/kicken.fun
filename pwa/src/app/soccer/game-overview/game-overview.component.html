@@ -1,8 +1,13 @@
 <mat-card class="score-board">
-  <div class="center">
-    <h1 align="center">{{timeInSeconds | soccerTime}}</h1>
-  </div>
-  <button mat-button (click)="startTimer()">Start</button>
+  <mat-card-content>
+    <div class="center">
+      <h1 align="center">{{timeInSeconds | soccerTime}}</h1>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="startTimer()">Start</button>
+    <button mat-button (click)="stopTimer()">Stop</button>
+  </mat-card-actions>
 </mat-card>
 
 <mat-card class="player-list">

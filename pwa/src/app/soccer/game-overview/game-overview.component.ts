@@ -26,7 +26,7 @@ export class GameOverviewComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe((params) => {
-        if(!params.club || !params.team) {
+        if (!params.club || !params.team) {
           this.router.navigate(['/club-selection']);
         } else {
           this.club = params.club;
@@ -45,12 +45,15 @@ export class GameOverviewComponent implements OnInit {
     this.playerService.getPlayers(this.club, this.team)
       .subscribe(data => {
         this.players = data as Player[];
-        console.log(data);
       });
   }
 
   public startTimer(): void {
     this.stopWatch.startTimer();
+  }
+
+  public stopTimer(): void {
+    this.stopWatch.stopTimer();
   }
 
 }

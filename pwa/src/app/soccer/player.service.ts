@@ -11,7 +11,7 @@ export class PlayerService {
   constructor(private httpClient: HttpClient) { }
 
   public getPlayers(club: string, team: string): Observable<Object> {
-    
+
     return this.httpClient
       .get('http://localhost:8888/players/' + club + '/' + team);
   }

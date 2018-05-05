@@ -18,8 +18,15 @@ export class StopWatchService {
   }
 
   public startTimer(): void {
-    this.runFlag = true;
-    this.countSecond();
+
+    if (!this.runFlag) {
+      this.runFlag = true;
+      this.countSecond();
+    }
+  }
+
+  public stopTimer(): void {
+    this.runFlag = false;
   }
 
   private countSecond(): void {
@@ -27,7 +34,7 @@ export class StopWatchService {
       this.timeInSeconds += 1;
       this.subject.next(this.timeInSeconds);
 
-      if(this.runFlag) {
+      if (this.runFlag) {
         this.countSecond();
       }
     }, 1000);
