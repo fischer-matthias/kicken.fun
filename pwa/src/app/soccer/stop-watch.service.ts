@@ -32,11 +32,20 @@ export class StopWatchService {
     }
   }
 
+  public isSecondHalf(): boolean {
+    return this.startSecondHalftimeTimestamp !== null;
+  }
+
   public getTimeInSeconds(): number {
+
+    let timeInSeconds: number;
+
     if (this.startSecondHalftimeTimestamp === null) {
-      return (Date.now() - this.startFirstHalftimeTimestamp) % 1000;
+      timeInSeconds = (Date.now() - this.startFirstHalftimeTimestamp) / 1000;
     } else {
-      return ((Date.now() - this.startSecondHalftimeTimestamp) % 1000) + this.halfTimeLengthInSeconds;
+      timeInSeconds = ((Date.now() - this.startSecondHalftimeTimestamp) / 1000) + this.halfTimeLengthInSeconds;
     }
+
+    return Math.floor(timeInSeconds);
   }
 }

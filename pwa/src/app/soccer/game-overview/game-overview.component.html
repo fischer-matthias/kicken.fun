@@ -1,7 +1,7 @@
 <mat-card class="score-board">
   <mat-card-content>
     <div class="center">
-      <h1 align="center">{{timeInSeconds | soccerTime}}</h1>
+      <h1 align="center">{{timeInSeconds | soccerTime: isSecondHalf}}</h1>
     </div>
   </mat-card-content>
   <mat-card-actions>

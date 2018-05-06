@@ -17,7 +17,8 @@ export class GameOverviewComponent implements OnInit {
 
   private players: Player[];
 
-  private timeObservable: Observable<Number>;
+  private runFlag: boolean = false;
+  private isSecondHalf: boolean = false;
   private timeInSeconds: Number = 2700;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -34,11 +35,6 @@ export class GameOverviewComponent implements OnInit {
           this.loadPlayers();
         }
       });
-
-    this.timeObservable = this.stopWatch.getObservable();
-    this.timeObservable.subscribe((value) => {
-      this.timeInSeconds = value;
-    });
   }
 
   private loadPlayers(): void {
@@ -49,11 +45,28 @@ export class GameOverviewComponent implements OnInit {
   }
 
   public startTimer(): void {
-    this.stopWatch.startTimer();
+    if (!this.runFlag) {
+      this.stopWatch.start();
+      this.getTimeInSeconds();
+      this.runFlag = true;
+    }
+  }
+
+  public getTimeInSeconds(): void {
+    setTimeout(() => {
+
+      this.timeInSeconds = this.stopWatch.getTimeInSeconds();
+      this.isSecondHalf = this.stopWatch.isSecondHalf();
+
+      if (this.runFlag) {
+        this.getTimeInSeconds();
+      }
+    }, 1000);
   }
 
   public stopTimer(): void {
-    this.stopWatch.stopTimer();
+    this.stopWatch.stop();
+    this.runFlag = false;
   }
 
 }

@@ -5,10 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimePipe implements PipeTransform {
 
-  transform(value: number, halftime?: boolean): any {
+  transform(value: number, secondHalf?: boolean): any {
 
-    if (!halftime) {
-      halftime = false;
+    if (!secondHalf) {
+      secondHalf = false;
     }
 
     let strMin = '00';
@@ -18,7 +18,7 @@ export class TimePipe implements PipeTransform {
       const min = Math.floor(value / 60);
       const sec = value % 60;
 
-      if (!halftime && min >= 45) {
+      if (!secondHalf && min >= 45) {
         strMin = '45';
         strSec = '00';
 
