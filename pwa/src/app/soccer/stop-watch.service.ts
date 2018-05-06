@@ -5,47 +5,38 @@ import { TimePipe } from './time.pipe';
 @Injectable()
 export class StopWatchService {
 
-  private timePipe: TimePipe;
+  private halfTimeLengthInSeconds = 2700;
 
-  private timeInSeconds = 0;
-  private subject;
+  private startFirstHalftimeTimestamp: number = null;
+  private startSecondHalftimeTimestamp: number = null;
 
-  private runFlag = false;
-  private halftime = false;
+  private endFirstHalftimeTimestamp: number = null;
+  private endSecondHalftimeTimestamp: number = null;
 
   constructor() {
-    this.subject = new Subject<Number>();
-    this.timePipe = new TimePipe();
   }
 
-  public getObservable(): Subject<Number> {
-    return this.subject;
-  }
-
-  public startTimer(): void {
-
-    if (!this.runFlag) {
-      this.runFlag = true;
-      this.countSecond();
+  public start(): void {
+    if (this.startFirstHalftimeTimestamp === null) {
+      this.startFirstHalftimeTimestamp = Date.now();
+    } else if (this.startSecondHalftimeTimestamp === null) {
+      this.startSecondHalftimeTimestamp = Date.now();
     }
   }
 
-  public stopTimer(): void {
-    this.runFlag = false;
+  public stop(): void {
+    if (this.endFirstHalftimeTimestamp === null) {
+      this.endFirstHalftimeTimestamp = Date.now();
+    } else if (this.endSecondHalftimeTimestamp === null) {
+      this.endSecondHalftimeTimestamp = Date.now();
+    }
   }
 
-  private countSecond(): void {
-    setTimeout(() => {
-      this.timeInSeconds += 1;
-      this.subject.next(this.timeInSeconds);
-
-      if (this.runFlag) {
-        this.countSecond();
-      }
-    }, 1000);
-  }
-
-  private startHalftime(): void {
-    this.halftime = true;
+  public getTimeInSeconds(): number {
+    if (this.startSecondHalftimeTimestamp === null) {
+      return (Date.now() - this.startFirstHalftimeTimestamp) % 1000;
+    } else {
+      return ((Date.now() - this.startSecondHalftimeTimestamp) % 1000) + this.halfTimeLengthInSeconds;
+    }
   }
 }
