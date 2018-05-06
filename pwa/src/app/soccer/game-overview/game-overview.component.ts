@@ -18,7 +18,7 @@ export class GameOverviewComponent implements OnInit {
   private players: Player[];
 
   private timeObservable: Observable<Number>;
-  private timeInSeconds: Number = 0;
+  private timeInSeconds: Number = 2700;
 
   constructor(private router: Router, private route: ActivatedRoute,
       private playerService: PlayerService, private stopWatch: StopWatchService) { }

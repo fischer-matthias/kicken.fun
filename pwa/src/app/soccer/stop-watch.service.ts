@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { TimePipe } from './time.pipe';
 
 @Injectable()
 export class StopWatchService {
+
+  private timePipe: TimePipe;
 
   private timeInSeconds = 0;
   private subject;
 
   private runFlag = false;
+  private halftime = false;
 
   constructor() {
     this.subject = new Subject<Number>();
+    this.timePipe = new TimePipe();
   }
 
   public getObservable(): Subject<Number> {
@@ -38,5 +43,9 @@ export class StopWatchService {
         this.countSecond();
       }
     }, 1000);
+  }
+
+  private startHalftime(): void {
+    this.halftime = true;
   }
 }
