@@ -17,12 +17,16 @@ export class GameOverviewComponent implements OnInit {
 
   private players: Player[];
 
-  private runFlag: boolean = false;
-  private isSecondHalf: boolean = false;
+  private runFlag = false;
+  private isSecondHalf = false;
+  private endFlag = false;
+
   private timeInSeconds: Number = 0;
 
+  private statusString = 'Start';
+
   constructor(private router: Router, private route: ActivatedRoute,
-      private playerService: PlayerService, private stopWatch: StopWatchService) { }
+    private playerService: PlayerService, private stopWatch: StopWatchService) { }
 
   ngOnInit() {
     this.route.queryParams
@@ -37,6 +41,14 @@ export class GameOverviewComponent implements OnInit {
       });
   }
 
+  public switchStatus(): void {
+    if (this.runFlag) {
+      this.stopTimer();
+    } else {
+      this.startTimer();
+    }
+  }
+
   private loadPlayers(): void {
     this.playerService.getPlayers(this.club, this.team)
       .subscribe(data => {
@@ -44,15 +56,25 @@ export class GameOverviewComponent implements OnInit {
       });
   }
 
-  public startTimer(): void {
-    if (!this.runFlag) {
-      this.stopWatch.start();
-      this.getTimeInSeconds();
-      this.runFlag = true;
+  private startTimer(): void {
+    this.runFlag = true;
+    this.stopWatch.start();
+    this.getTimeInSeconds();
+
+    if (this.isSecondHalf) {
+      this.statusString = 'End';
+    } else {
+      this.statusString = 'Halftime';
     }
   }
 
-  public getTimeInSeconds(): void {
+  private stopTimer(): void {
+    this.runFlag = false;
+    this.stopWatch.stop();
+    this.statusString = 'Start';
+  }
+
+  private getTimeInSeconds(): void {
     setTimeout(() => {
 
       this.timeInSeconds = this.stopWatch.getTimeInSeconds();
@@ -62,11 +84,6 @@ export class GameOverviewComponent implements OnInit {
         this.getTimeInSeconds();
       }
     }, 1000);
-  }
-
-  public stopTimer(): void {
-    this.stopWatch.stop();
-    this.runFlag = false;
   }
 
 }

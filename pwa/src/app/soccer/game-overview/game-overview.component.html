@@ -5,8 +5,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button (click)="startTimer()">Start</button>
-    <button mat-button (click)="stopTimer()">Stop</button>
+    <button *ngIf="!endFlag" mat-button (click)="switchStatus()">{{statusString}}</button>
   </mat-card-actions>
 </mat-card>
 
@@ -15,9 +14,9 @@
   <mat-list>
     <div *ngFor="let player of players">
       <mat-list-item>
-          <h4 mat-line>{{player.vorname}} {{player.name}} ({{player.alter}})</h4>
-        </mat-list-item>
-        <mat-divider *ngIf="player != players[players.length -1]"></mat-divider>
+        <h4 mat-line>{{player.vorname}} {{player.name}} ({{player.alter}})</h4>
+      </mat-list-item>
+      <mat-divider *ngIf="player != players[players.length -1]"></mat-divider>
     </div>
   </mat-list>
 </mat-card>

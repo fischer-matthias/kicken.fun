@@ -33,7 +33,7 @@ export class StopWatchService {
   }
 
   public isSecondHalf(): boolean {
-    return this.startSecondHalftimeTimestamp !== null;
+    return this.endFirstHalftimeTimestamp !== null;
   }
 
   public getTimeInSeconds(): number {
