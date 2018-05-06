@@ -19,7 +19,7 @@ export class GameOverviewComponent implements OnInit {
 
   private runFlag: boolean = false;
   private isSecondHalf: boolean = false;
-  private timeInSeconds: Number = 2700;
+  private timeInSeconds: Number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute,
       private playerService: PlayerService, private stopWatch: StopWatchService) { }

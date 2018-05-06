@@ -32,6 +32,20 @@ export class TimePipe implements PipeTransform {
         }
 
         return strMin + ':' + strSec + ' +' + strMinDiff + ':' + strSecDiff;
+      } else if (secondHalf && min >= 90) {
+        strMin = '90';
+        strSec = '00';
+
+        const strMinDiff = (min - 90) + '';
+        let strSecDiff: string;
+
+        if (sec < 10) {
+          strSecDiff = '0' + sec;
+        } else {
+          strSecDiff = sec + '';
+        }
+
+        return strMin + ':' + strSec + ' +' + strMinDiff + ':' + strSecDiff;
       } else {
 
         if (min < 10) {
@@ -47,6 +61,8 @@ export class TimePipe implements PipeTransform {
         }
       }
 
+      return strMin + ':' + strSec;
+    } else {
       return strMin + ':' + strSec;
     }
   }
