@@ -1,42 +1,51 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { TimePipe } from './time.pipe';
 
 @Injectable()
 export class StopWatchService {
 
-  private timeInSeconds = 0;
-  private subject;
+  private halfTimeLengthInSeconds = 2700;
 
-  private runFlag = false;
+  private startFirstHalftimeTimestamp: number = null;
+  private startSecondHalftimeTimestamp: number = null;
+
+  private endFirstHalftimeTimestamp: number = null;
+  private endSecondHalftimeTimestamp: number = null;
 
   constructor() {
-    this.subject = new Subject<Number>();
   }
 
-  public getObservable(): Subject<Number> {
-    return this.subject;
-  }
-
-  public startTimer(): void {
-
-    if (!this.runFlag) {
-      this.runFlag = true;
-      this.countSecond();
+  public start(): void {
+    if (this.startFirstHalftimeTimestamp === null) {
+      this.startFirstHalftimeTimestamp = Date.now();
+    } else if (this.startSecondHalftimeTimestamp === null) {
+      this.startSecondHalftimeTimestamp = Date.now();
     }
   }
 
-  public stopTimer(): void {
-    this.runFlag = false;
+  public stop(): void {
+    if (this.endFirstHalftimeTimestamp === null) {
+      this.endFirstHalftimeTimestamp = Date.now();
+    } else if (this.endSecondHalftimeTimestamp === null) {
+      this.endSecondHalftimeTimestamp = Date.now();
+    }
   }
 
-  private countSecond(): void {
-    setTimeout(() => {
-      this.timeInSeconds += 1;
-      this.subject.next(this.timeInSeconds);
+  public isSecondHalf(): boolean {
+    return this.startSecondHalftimeTimestamp !== null;
+  }
 
-      if (this.runFlag) {
-        this.countSecond();
-      }
-    }, 1000);
+  public getTimeInSeconds(): number {
+
+    let timeInSeconds: number;
+
+    if (this.startSecondHalftimeTimestamp === null) {
+      timeInSeconds = (Date.now() - this.startFirstHalftimeTimestamp) / 1000;
+    } else {
+      timeInSeconds = ((Date.now() - this.startSecondHalftimeTimestamp) / 1000) + this.halfTimeLengthInSeconds;
+    }
+
+    return Math.floor(timeInSeconds);
   }
 }
