@@ -1,11 +1,13 @@
 <mat-card class="score-board">
   <mat-card-content>
-    <div class="center">
+    <div>
       <h1 align="center">{{timeInSeconds | soccerTime: isSecondHalf}}</h1>
+      <h2 align="center">Home {{stats.own}} - {{stats.enemy}} Enemy</h2>
     </div>
   </mat-card-content>
   <mat-card-actions>
     <button *ngIf="!endFlag" mat-button (click)="switchStatus()">{{statusString}}</button>
+    <button *ngIf="runFlag" mat-button (click)="addEnemyGoal()">Add enemy goal</button>
   </mat-card-actions>
 </mat-card>
 
@@ -15,6 +17,7 @@
     <div *ngFor="let player of players">
       <mat-list-item>
         <h4 mat-line>{{player.vorname}} {{player.name}} ({{player.alter}})</h4>
+        <button mat-button (click)="addGoal(player)">Goal</button>
       </mat-list-item>
       <mat-divider *ngIf="player != players[players.length -1]"></mat-divider>
     </div>

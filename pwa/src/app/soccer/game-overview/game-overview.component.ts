@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Player } from '../models/player';
+import { Goal } from '../models/goal';
+import { Stats } from '../models/stats';
+
 import { PlayerService } from '../player.service';
 import { StopWatchService } from '../stop-watch.service';
-import { Observable } from 'rxjs/Observable';
+import { GoalService } from '../goal.service';
 
 @Component({
   selector: 'soccer-game-overview',
@@ -20,13 +24,18 @@ export class GameOverviewComponent implements OnInit {
   private runFlag = false;
   private isSecondHalf = false;
   private endFlag = false;
-
-  private timeInSeconds: Number = 0;
-
   private statusString = 'Start';
 
+  private stats: Stats = new Stats();
+  private timeInSeconds: Number = 0;
+
   constructor(private router: Router, private route: ActivatedRoute,
-    private playerService: PlayerService, private stopWatch: StopWatchService) { }
+    private playerService: PlayerService, private stopWatch: StopWatchService,
+    private goalService: GoalService) {
+      this.goalService.getStatsSubject().subscribe((stats) => {
+        this.stats = stats;
+      });
+    }
 
   ngOnInit() {
     this.route.queryParams
@@ -47,6 +56,16 @@ export class GameOverviewComponent implements OnInit {
     } else {
       this.startTimer();
     }
+  }
+
+  public addEnemyGoal(): void {
+    const goal = {own: false, player: null, timeInSeconds: this.timeInSeconds} as Goal;
+    this.goalService.addGoal(goal);
+  }
+
+  public addGoal(player: Player) {
+    const goal = {own: true, player: player, timeInSeconds: this.timeInSeconds} as Goal;
+    this.goalService.addGoal(goal);
   }
 
   private loadPlayers(): void {
