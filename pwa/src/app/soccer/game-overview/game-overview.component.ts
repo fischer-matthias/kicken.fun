@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from '../models/player';
 import { Goal } from '../models/goal';
 import { Stats } from '../models/stats';
+import { GameStatus } from '../models/game-status';
 
 import { PlayerService } from '../player.service';
 import { StopWatchService } from '../stop-watch.service';
@@ -18,24 +19,18 @@ export class GameOverviewComponent implements OnInit {
 
   private club: string;
   private team: string;
-
   private players: Player[];
-
-  private runFlag = false;
-  private isSecondHalf = false;
-  private endFlag = false;
-  private statusString = 'Start';
-
   private stats: Stats = new Stats();
+  private gameStatus: GameStatus = new GameStatus();
   private timeInSeconds: Number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute,
     private playerService: PlayerService, private stopWatch: StopWatchService,
     private goalService: GoalService) {
-      this.goalService.getStatsSubject().subscribe((stats) => {
-        this.stats = stats;
-      });
-    }
+    this.goalService.getStatsSubject().subscribe((stats) => {
+      this.stats = stats;
+    });
+  }
 
   ngOnInit() {
     this.route.queryParams
@@ -51,7 +46,7 @@ export class GameOverviewComponent implements OnInit {
   }
 
   public switchStatus(): void {
-    if (this.runFlag) {
+    if (this.gameStatus.runFlag) {
       this.stopTimer();
     } else {
       this.startTimer();
@@ -59,12 +54,12 @@ export class GameOverviewComponent implements OnInit {
   }
 
   public addEnemyGoal(): void {
-    const goal = {own: false, player: null, timeInSeconds: this.timeInSeconds} as Goal;
+    const goal = { own: false, player: null, timeInSeconds: this.timeInSeconds } as Goal;
     this.goalService.addGoal(goal);
   }
 
   public addGoal(player: Player) {
-    const goal = {own: true, player: player, timeInSeconds: this.timeInSeconds} as Goal;
+    const goal = { own: true, player: player, timeInSeconds: this.timeInSeconds } as Goal;
     this.goalService.addGoal(goal);
   }
 
@@ -76,30 +71,30 @@ export class GameOverviewComponent implements OnInit {
   }
 
   private startTimer(): void {
-    this.runFlag = true;
+    this.gameStatus.runFlag = true;
     this.stopWatch.start();
     this.getTimeInSeconds();
 
-    if (this.isSecondHalf) {
-      this.statusString = 'End';
+    if (this.gameStatus.isSecondHalf) {
+      this.gameStatus.statusString = 'End';
     } else {
-      this.statusString = 'Halftime';
+      this.gameStatus.statusString = 'Halftime';
     }
   }
 
   private stopTimer(): void {
-    this.runFlag = false;
+    this.gameStatus.runFlag = false;
     this.stopWatch.stop();
-    this.statusString = 'Start';
+    this.gameStatus.statusString = 'Start';
   }
 
   private getTimeInSeconds(): void {
     setTimeout(() => {
 
       this.timeInSeconds = this.stopWatch.getTimeInSeconds();
-      this.isSecondHalf = this.stopWatch.isSecondHalf();
+      this.gameStatus.isSecondHalf = this.stopWatch.isSecondHalf();
 
-      if (this.runFlag) {
+      if (this.gameStatus.runFlag) {
         this.getTimeInSeconds();
       }
     }, 1000);
