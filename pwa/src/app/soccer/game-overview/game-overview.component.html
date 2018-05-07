@@ -6,8 +6,8 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button *ngIf="!endFlag" mat-button (click)="switchStatus()">{{statusString}}</button>
-    <button *ngIf="runFlag" mat-button (click)="addEnemyGoal()">Add enemy goal</button>
+    <button *ngIf="!gameStatus.endFlag" mat-button (click)="switchStatus()">{{gameStatus.statusString}}</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="addEnemyGoal()">Add enemy goal</button>
   </mat-card-actions>
 </mat-card>
 
