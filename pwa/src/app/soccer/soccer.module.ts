@@ -11,6 +11,7 @@ import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatD
 import { ClubService } from './club.service';
 import { PlayerService } from './player.service';
 import { StopWatchService } from './stop-watch.service';
+import { GoalService } from './goal.service';
 
 // declare components
 import { HomeComponent } from './home/home.component';
@@ -41,7 +42,7 @@ export const soccerRoutes = [
     MatListModule
   ],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
-  providers: [ClubService, PlayerService, StopWatchService],
+  providers: [ClubService, PlayerService, StopWatchService, GoalService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }
