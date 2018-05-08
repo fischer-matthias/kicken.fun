@@ -6,6 +6,7 @@ module.exports = () => {
 
     // imports
     const https = require('https');
+    const esprima = require('esprima');
     const parse5 = require('parse5');
     const findChildNode = require('find-child-node')();
 
@@ -21,20 +22,22 @@ module.exports = () => {
             const htmlObj = parse5.parse(rawHTML);
             var players = [];
 
-            const teamKaderContainerNode = findChildNode.byClass(htmlObj.childNodes, 'team_kader_container');
-            if(teamKaderContainerNode == null) {
-                reject('Team wurde nicht gefunden.');
-            }
+            resolve(htmlObj);
 
-            teamKaderContainerNode.childNodes.forEach((node) => {
-                if(node.nodeName == 'a') {
-                    var playerInfo = findChildNode.byClass(node.childNodes, 'team_kader_info');
-                    var player = parsePlayerInfo(playerInfo);
-                    players.push(player);
-                }
-            });
+            // const teamKaderContainerNode = findChildNode.byClass(htmlObj.childNodes, 'team_kader_container');
+            // if(teamKaderContainerNode == null) {
+            //     reject('Team wurde nicht gefunden.');
+            // }
 
-            resolve(players);
+            // teamKaderContainerNode.childNodes.forEach((node) => {
+            //     if(node.nodeName == 'a') {
+            //         var playerInfo = findChildNode.byClass(node.childNodes, 'team_kader_info');
+            //         var player = parsePlayerInfo(playerInfo);
+            //         players.push(player);
+            //     }
+            // });
+
+            // resolve(players);
         });
     }
 
@@ -84,15 +87,15 @@ module.exports = () => {
     }
 
     /**
-     * 
-     * @param {string} club clubname
-     * @param {string} team first, second, third ... team (m1, m2, m3 ...)
+     * Returns the players of a specific team
+     * @param {string} teamID fupa team id
      * @returns {*} Array of team members 
      */
-    fupaParser.getPlayersOfTeam = (club, team) => {
+    fupaParser.getPlayersOfTeam = (teamID) => {
         return new Promise((resolve, reject) => {
+
             // create http request
-            https.get('https://www.fupa.net/club/' + club + '/team/' + team, (resp) => {
+            https.get('https://www.fupa.net/fupa/widget.php?val=' + teamID + '&p=start&act=team&fupa_widget_header=0&fupa_widget_navi=0&fupa_widget_div=widget_5af16fa242655&url=www.fupa.net', (resp) => {
                 let data = '';
                
                 // A chunk of data has been recieved.
@@ -100,9 +103,22 @@ module.exports = () => {
                
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
-                    parseHTML(data)
-                        .then((result) => resolve(result))
-                        .catch((error) => reject(error));
+
+                    var parsedData = esprima.parseScript(data);
+                    if(parsedData && parsedData.body 
+                        && parsedData.body[1] && parsedData.body[1].expression 
+                        && parsedData.body[1].expression.right
+                        && parsedData.body[1].expression.right.value) {
+
+                        var htmlString = parsedData.body[1].expression.right.value;
+                        resolve(htmlString);
+                    } else {
+                        reject('No html found.');
+                    }
+
+                    // parseHTML(data)
+                    //     .then((result) => resolve(result))
+                    //     .catch((error) => reject(error));
                 });
                
               }).on("error", (err) => {
