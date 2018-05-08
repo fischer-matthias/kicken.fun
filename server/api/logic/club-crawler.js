@@ -9,6 +9,25 @@ module.exports = () => {
     const clubCrawler = {};
 
     /**
+     * Converts the fupa array[array] format to a single flat array.
+     * @param {*} response 
+     * @returns edited fupa response
+     */
+    function parseFupaResponse(response) {
+        var clubs = [];
+
+        for (var property in response) {
+            if (response.hasOwnProperty(property)) {
+                if(Array.isArray(response[property])) {
+                    clubs = clubs.concat(response[property]);
+                }
+            }
+        }
+
+        return clubs;
+    }
+
+    /**
      * Returns a list of clubs found by a specific search term.
      * @param {string} searchTerm 
      * @returns Promise<Array> of clubs
@@ -25,7 +44,7 @@ module.exports = () => {
                 
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
-                    resolve(data);
+                    resolve(parseFupaResponse(JSON.parse(data)));
                 });
             
             }).on("error", (err) => {
