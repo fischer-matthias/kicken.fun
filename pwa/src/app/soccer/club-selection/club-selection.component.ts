@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Club } from "../models/club";
-import { ClubService } from '../club.service';
 import { Router } from '@angular/router';
+import { TeamService } from '../team.service';
+import { Team } from '../models/team';
+
 
 @Component({
   selector: 'soccer-club-selection',
@@ -10,16 +11,16 @@ import { Router } from '@angular/router';
 })
 export class ClubSelectionComponent implements OnInit {
 
-  public clubs: Club[];
-  public selectedClub: Club;
-  public selectedTeam: string;
+  private teams: Team[] = [];
+  private selectedTeam: Team;
 
-  constructor(private clubService: ClubService, private router: Router) { }
+  constructor(private teamService: TeamService, private router: Router) { }
 
   ngOnInit() {
-    this.clubService.getClubsMock()
+    this.teamService.searchTeam()
       .then((result) => {
-        this.clubs = result as Club[];
+        this.teams = result;
+        console.log(this.teams);
       })
       .catch((error) => {
         console.log(error);
@@ -28,7 +29,7 @@ export class ClubSelectionComponent implements OnInit {
 
   public startGame(): void {
     console.log('Route to /game-overview.');
-    this.router.navigate(['/game-overview'], { queryParams: { club: this.selectedClub.key, team: this.selectedTeam } });
+    this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam } });
   }
 
 }

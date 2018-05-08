@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule } from '@angular/material';
 
 // provide services
-import { ClubService } from './club.service';
+import { TeamService } from './team.service';
 import { PlayerService } from './player.service';
 import { StopWatchService } from './stop-watch.service';
 import { GoalService } from './goal.service';
@@ -42,7 +42,7 @@ export const soccerRoutes = [
     MatListModule
   ],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
-  providers: [ClubService, PlayerService, StopWatchService, GoalService],
+  providers: [TeamService, PlayerService, StopWatchService, GoalService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }
