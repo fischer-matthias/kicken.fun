@@ -9,7 +9,9 @@ app.use(cors());
 
 // register routes
 app.use('/players/', require('./api/routes/players')().routes);
+app.use('/clubs/', require('./api/routes/clubs')().routes);
 
+// setup port
 var port = 8080;
 if(process.argv[2] !== undefined && process.argv[2] !== null) {
     port = process.argv[2];
