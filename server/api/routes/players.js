@@ -13,6 +13,7 @@ module.exports = function() {
                 res.status(200).send(result);
             })
             .catch((error) => {
+                console.log(error);
                 res.status(406).send({'status': 'nok', 'error': error});
             });
     });
