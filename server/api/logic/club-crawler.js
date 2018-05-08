@@ -6,14 +6,14 @@ module.exports = () => {
     // includes
     const https = require('https');
 
-    const clubParser = {};
+    const clubCrawler = {};
 
     /**
      * Returns a list of clubs found by a specific search term.
      * @param {string} searchTerm 
      * @returns Promise<Array> of clubs
      */
-    clubParser.findClub = (searchTerm) => {
+    clubCrawler.findClub = (searchTerm) => {
 
         return new Promise((resolve, reject) => {
             // create http request
@@ -34,5 +34,5 @@ module.exports = () => {
         });
     }
 
-    return clubParser;
+    return clubCrawler;
 }
