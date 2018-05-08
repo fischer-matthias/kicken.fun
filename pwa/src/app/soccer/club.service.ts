@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Club } from "./models/club";
 
 @Injectable()
@@ -10,12 +14,16 @@ export class ClubService {
     {'value': 'Tus Badbergen', 'key': 'tus-badbergen', 'teams': ['m1']},
   ];
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   /**
    * Mock method that returns the clubs via Promise.
    */
   public getClubsMock(): Promise<Array<Club>> {
+
+    this.httpClient.get('https://www.fupa.net/fupa/api.php?q=FC%20Talge&p=json_team_liste&saison=&liga_id=')
+      .subscribe(data => console.log(data));
+
     return new Promise<Array<Club>>((resolve, reject) => {
       resolve(this.mockdata);
     });
