@@ -7,21 +7,9 @@
   </mat-card-content>
   <mat-card-actions>
     <button *ngIf="!gameStatus.endFlag" mat-button (click)="switchStatus()">{{gameStatus.statusString}}</button>
-    <button *ngIf="gameStatus.runFlag" mat-button (click)="addEnemyGoal()">Gegentor</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(true)">Tor</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal()">Gegentor</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, true)">Gelbe Karte</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, false, true)">Rote Karte</button>
   </mat-card-actions>
-</mat-card>
-
-<mat-card class="player-list">
-  <mat-card-title>Spieler:</mat-card-title>
-  <mat-list>
-    <div *ngFor="let player of players">
-      <mat-list-item>
-        <h4 mat-line>{{player.vorname}} {{player.nachname}} ({{player.alter}})</h4>
-        <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal(player)">Tor</button>
-        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, true)">Gelbe Karte</button>
-        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, false, true)">Rote Karte</button>
-      </mat-list-item>
-      <mat-divider *ngIf="player != players[players.length -1]"></mat-divider>
-    </div>
-  </mat-list>
 </mat-card>

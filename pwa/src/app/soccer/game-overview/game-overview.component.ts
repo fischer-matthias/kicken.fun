@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { PlayerSelectionDialog } from '../player-selection-dialog/player-selection-dialog.component';
 
 import { Team } from '../models/team';
 import { Player } from '../models/player';
@@ -27,8 +29,10 @@ export class GameOverviewComponent implements OnInit {
   private timeInSeconds: Number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute,
-    private playerService: PlayerService, private stopWatch: StopWatchService,
-    private goalService: GoalService, private cardService: CardService) {
+              private dialog: MatDialog,
+              private playerService: PlayerService, private stopWatch: StopWatchService,
+              private goalService: GoalService, private cardService: CardService) {
+
     this.goalService.getStatsSubject().subscribe((stats) => {
       this.stats = stats;
     });
@@ -54,17 +58,33 @@ export class GameOverviewComponent implements OnInit {
     }
   }
 
-  public addEnemyGoal(): void {
-    const goal = { own: false, player: null, timeInSeconds: this.timeInSeconds } as Goal;
+  public selectPlayerFor(goal = false, yellowCard = false, redCard = false): void {
+    if(goal || yellowCard || redCard) {
+      let dialogRef = this.dialog.open(PlayerSelectionDialog, {
+        width: '100%',
+        data: { players: this.players }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(result !== undefined && result !== null) {
+          if(goal) {
+            this.addGoal(result);
+          } else if(yellowCard) {
+            this.addCard(result, true);
+          } else if(redCard) {
+            this.addCard(result, false, true);
+          }
+        }
+      });
+    }
+  }
+
+  private addGoal(player: Player = null): void {
+    const goal = { own: (player == null ? false : true), player: player, timeInSeconds: this.timeInSeconds } as Goal;
     this.goalService.addGoal(goal);
   }
 
-  public addGoal(player: Player): void {
-    const goal = { own: true, player: player, timeInSeconds: this.timeInSeconds } as Goal;
-    this.goalService.addGoal(goal);
-  }
-
-  public addCard(player: Player, yellow = false, red = false): void {
+  private addCard(player: Player, yellow = false, red = false): void {
     const card = { player: player, timeInSeconds: this.timeInSeconds, yellow: yellow, yellowRed: false, red: red } as Card;
 
     if(this.cardService.playerHasYellowCard(player)) {
