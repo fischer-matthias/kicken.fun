@@ -48,7 +48,7 @@ export const soccerRoutes = [
     MatListModule
   ],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
-  providers: [TeamService, PlayerService, StopWatchService, GoalService],
+  providers: [TeamService, PlayerService, StopWatchService, GoalService, CardService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }

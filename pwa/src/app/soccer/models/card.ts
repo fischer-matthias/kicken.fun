@@ -1,6 +1,9 @@
+import { Player } from "./player";
+
 export class Card {
+  player: Player;
   timeInSeconds: Number;
-  yellow: boolean;
-  yellowRed: boolean;
-  red: boolean;
+  yellow: boolean = false;
+  yellowRed: boolean = false;
+  red: boolean = false;
 }
