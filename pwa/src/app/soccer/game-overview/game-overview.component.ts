@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Team } from '../models/team';
 import { Player } from '../models/player';
 import { Goal } from '../models/goal';
 import { Stats } from '../models/stats';
@@ -17,7 +18,6 @@ import { GoalService } from '../goal.service';
 })
 export class GameOverviewComponent implements OnInit {
 
-  private club: string;
   private team: string;
   private players: Player[];
   private stats: Stats = new Stats();
@@ -35,10 +35,9 @@ export class GameOverviewComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe((params) => {
-        if (!params.club || !params.team) {
+        if (!params.team) {
           this.router.navigate(['/club-selection']);
         } else {
-          this.club = params.club;
           this.team = params.team;
           this.loadPlayers();
         }
@@ -64,7 +63,7 @@ export class GameOverviewComponent implements OnInit {
   }
 
   private loadPlayers(): void {
-    this.playerService.getPlayers(this.club, this.team)
+    this.playerService.getPlayers(this.team)
       .subscribe(data => {
         this.players = data as Player[];
       });

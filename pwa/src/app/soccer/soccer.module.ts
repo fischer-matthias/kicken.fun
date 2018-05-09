@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule } from '@angular/material';
 
 // provide services
-import { ClubService } from './club.service';
+import { TeamService } from './team.service';
 import { PlayerService } from './player.service';
 import { StopWatchService } from './stop-watch.service';
 import { GoalService } from './goal.service';
@@ -31,19 +32,23 @@ export const soccerRoutes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(soccerRoutes),
     HttpClientModule,
 
     MatToolbarModule,
     MatButtonModule,
+    MatInputModule,
     MatCardModule,
     MatSelectModule,
     MatDividerModule,
     MatListModule
   ],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
-  providers: [ClubService, PlayerService, StopWatchService, GoalService, CardService],
+  providers: [TeamService, PlayerService, StopWatchService, GoalService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }
