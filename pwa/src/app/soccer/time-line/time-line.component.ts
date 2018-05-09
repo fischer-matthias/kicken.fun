@@ -15,8 +15,14 @@ export class TimeLineComponent {
   private timeLineItems: TimeLineItem[] = [];
 
   constructor(private goalService: GoalService, private cardService: CardService) { 
-    this.goalService.getGoalSubject().subscribe((item) => this.timeLineItems.push(item));
-    this.cardService.getCardSubject().subscribe((item) => this.timeLineItems.push(item));
+    this.goalService.getGoalSubject().subscribe((item) => {
+      item.goal = true;
+      this.timeLineItems.push(item)
+    });
+    this.cardService.getCardSubject().subscribe((item) => {
+      item.card = true;
+      this.timeLineItems.push(item)
+    });
   }
 
 }
