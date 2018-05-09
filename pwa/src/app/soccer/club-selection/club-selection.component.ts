@@ -26,7 +26,6 @@ export class ClubSelectionComponent implements OnInit {
           this.teamService.searchTeam(data)
           .then((result) => {
             this.teams = result;
-            console.log(this.teams);
           })
           .catch((error) => {
             console.log(error);

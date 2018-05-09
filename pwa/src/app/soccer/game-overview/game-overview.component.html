@@ -2,24 +2,24 @@
   <mat-card-content>
     <div>
       <h1 align="center">{{timeInSeconds | soccerTime: gameStatus.isSecondHalf}}</h1>
-      <h2 align="center">Home {{stats.own}} - {{stats.enemy}} Enemy</h2>
+      <h2 align="center">Freund {{stats.own}} - {{stats.enemy}} Gegner</h2>
     </div>
   </mat-card-content>
   <mat-card-actions>
     <button *ngIf="!gameStatus.endFlag" mat-button (click)="switchStatus()">{{gameStatus.statusString}}</button>
-    <button *ngIf="gameStatus.runFlag" mat-button (click)="addEnemyGoal()">Add enemy goal</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="addEnemyGoal()">Gegentor</button>
   </mat-card-actions>
 </mat-card>
 
 <mat-card class="player-list">
-  <mat-card-title>Team-Members:</mat-card-title>
+  <mat-card-title>Spieler:</mat-card-title>
   <mat-list>
     <div *ngFor="let player of players">
       <mat-list-item>
         <h4 mat-line>{{player.vorname}} {{player.nachname}} ({{player.alter}})</h4>
-        <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal(player)">Goal</button>
-        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, true)">Yellow card</button>
-        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, false, true)">Red card</button>
+        <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal(player)">Tor</button>
+        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, true)">Gelbe Karte</button>
+        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, false, true)">Rote Karte</button>
       </mat-list-item>
       <mat-divider *ngIf="player != players[players.length -1]"></mat-divider>
     </div>
