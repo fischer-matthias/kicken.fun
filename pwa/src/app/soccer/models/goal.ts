@@ -1,7 +1,5 @@
-import { Player } from './player';
+import { TimeLineItem } from './time-line-item';
 
-export class Goal {
+export class Goal extends TimeLineItem{
   own: boolean;
-  player: Player;
-  timeInSeconds: Number;
 }
