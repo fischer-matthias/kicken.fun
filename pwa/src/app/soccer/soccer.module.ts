@@ -21,6 +21,7 @@ import { ClubSelectionComponent } from './club-selection/club-selection.componen
 import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { TimePipe } from './time.pipe';
 import { PlayerSelectionDialog } from './player-selection-dialog/player-selection-dialog.component';
+import { TimeLineComponent } from './time-line/time-line.component';
 
 // declare routes
 export const soccerRoutes = [
@@ -50,7 +51,7 @@ export const soccerRoutes = [
     MatDialogModule
   ],
   entryComponents: [PlayerSelectionDialog],
-  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe, PlayerSelectionDialog],
+  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe, PlayerSelectionDialog, TimeLineComponent],
   providers: [TeamService, PlayerService, StopWatchService, GoalService, CardService],
   exports: [HomeComponent]
 })

@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content>
+    <mat-list>
+      <div *ngFor="let item of timeLineItems">
+        <mat-list-item>
+          <h4 mat-line>{{item?.timeInSeconds | soccerTime}}: {{item?.player?.vorname}} {{item?.player?.nachname}}</h4>
+        </mat-list-item>
+        <mat-divider *ngIf="item != timeLineItems[timeLineItems.length -1]"></mat-divider>
+      </div>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

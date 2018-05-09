@@ -1,8 +1,6 @@
-import { Player } from "./player";
+import { TimeLineItem } from "./time-line-item";
 
-export class Card {
-  player: Player;
-  timeInSeconds: Number;
+export class Card extends TimeLineItem {
   yellow: boolean = false;
   yellowRed: boolean = false;
   red: boolean = false;
