@@ -10,9 +10,9 @@ export class TeamService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public searchTeam(): Promise<Team[]> {
+  public searchTeam(searchTerm: string): Promise<Team[]> {
     return new Promise<Team[]>((resolve, reject) => {
-      this.httpClient.get('http://localhost:8888/clubs/' + 'FC%20Talge')
+      this.httpClient.get('http://localhost:8888/clubs/' + searchTerm)
         .subscribe(data => resolve(data as Team[]));
     });
   }

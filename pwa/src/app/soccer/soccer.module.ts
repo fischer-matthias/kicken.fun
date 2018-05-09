@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule } from '@angular/material';
 
 // provide services
 import { TeamService } from './team.service';
@@ -30,12 +31,16 @@ export const soccerRoutes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(soccerRoutes),
     HttpClientModule,
 
     MatToolbarModule,
     MatButtonModule,
+    MatInputModule,
     MatCardModule,
     MatSelectModule,
     MatDividerModule,
