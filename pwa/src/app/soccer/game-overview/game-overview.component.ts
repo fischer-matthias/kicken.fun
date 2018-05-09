@@ -90,16 +90,16 @@ export class GameOverviewComponent implements OnInit {
     this.getTimeInSeconds();
 
     if (this.gameStatus.isSecondHalf) {
-      this.gameStatus.statusString = 'End';
+      this.gameStatus.statusString = 'Abpfiff';
     } else {
-      this.gameStatus.statusString = 'Halftime';
+      this.gameStatus.statusString = 'Halbzeit';
     }
   }
 
   private stopTimer(): void {
     this.gameStatus.runFlag = false;
     this.stopWatch.stop();
-    this.gameStatus.statusString = 'Start';
+    this.gameStatus.statusString = 'Anpfiff';
   }
 
   private getTimeInSeconds(): void {
