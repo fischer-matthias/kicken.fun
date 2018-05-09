@@ -13,6 +13,7 @@ import { TeamService } from './team.service';
 import { PlayerService } from './player.service';
 import { StopWatchService } from './stop-watch.service';
 import { GoalService } from './goal.service';
+import { CardService } from './card.service';
 
 // declare components
 import { HomeComponent } from './home/home.component';
@@ -47,7 +48,7 @@ export const soccerRoutes = [
     MatListModule
   ],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
-  providers: [TeamService, PlayerService, StopWatchService, GoalService],
+  providers: [TeamService, PlayerService, StopWatchService, GoalService, CardService],
   exports: [HomeComponent]
 })
 export class SoccerModule { }

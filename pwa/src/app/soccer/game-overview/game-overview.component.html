@@ -18,6 +18,8 @@
       <mat-list-item>
         <h4 mat-line>{{player.vorname}} {{player.nachname}} ({{player.alter}})</h4>
         <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal(player)">Goal</button>
+        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, true)">Yellow card</button>
+        <button *ngIf="gameStatus.runFlag" mat-button (click)="addCard(player, false, true)">Red card</button>
       </mat-list-item>
       <mat-divider *ngIf="player != players[players.length -1]"></mat-divider>
     </div>
