@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Club } from "../models/club";
-import { ClubService } from '../club.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/debounceTime';
+
+import { TeamService } from '../team.service';
+import { Team } from '../models/team';
 
 @Component({
   selector: 'soccer-club-selection',
@@ -10,25 +14,40 @@ import { Router } from '@angular/router';
 })
 export class ClubSelectionComponent implements OnInit {
 
-  public clubs: Club[];
-  public selectedClub: Club;
-  public selectedTeam: string;
+  private teams: Team[] = [];
+  private selectedTeam: Team;
+	private searchTerm: FormControl = new FormControl();
 
-  constructor(private clubService: ClubService, private router: Router) { }
-
-  ngOnInit() {
-    this.clubService.getClubsMock()
-      .then((result) => {
-        this.clubs = result as Club[];
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  constructor(private teamService: TeamService, private router: Router) {
+    this.searchTerm.valueChanges
+   		.debounceTime(400) 
+   		.subscribe(data => {
+        if(typeof data === 'string') {
+          this.teamService.searchTeam(data)
+          .then((result) => {
+            this.teams = result;
+            console.log(this.teams);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+   		});
   }
+
+  ngOnInit() {}
 
   public startGame(): void {
     console.log('Route to /game-overview.');
-    this.router.navigate(['/game-overview'], { queryParams: { club: this.selectedClub.key, team: this.selectedTeam } });
+    this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam.value } });
+  }
+
+  public selectTeam(event: MatAutocompleteSelectedEvent): void {
+    this.selectedTeam = event.option.value;
+  }
+
+  public displayFn(team?: Team): string | undefined {
+    return team ? team.name : undefined;
   }
 
 }

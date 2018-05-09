@@ -1,8 +1,11 @@
 export class Player {
-    name: string;
+    nachname: string;
     vorname: string;
     alter: string;
-    kader_seit: string;
-    verletzt: boolean;
-    sperre: boolean;
+    einsaetze: string;
+    tore: string;
+    vorlagen: string;
+    gelbeKarten: string;
+    gelbroteKarten: string;
+    roteKarten: string;
 }
