@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
 
 // provide services
 import { TeamService } from './team.service';
@@ -20,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { ClubSelectionComponent } from './club-selection/club-selection.component';
 import { GameOverviewComponent } from './game-overview/game-overview.component';
 import { TimePipe } from './time.pipe';
+import { PlayerSelectionDialog } from './player-selection-dialog/player-selection-dialog.component';
 
 // declare routes
 export const soccerRoutes = [
@@ -45,9 +46,11 @@ export const soccerRoutes = [
     MatCardModule,
     MatSelectModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
-  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe],
+  entryComponents: [PlayerSelectionDialog],
+  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe, PlayerSelectionDialog],
   providers: [TeamService, PlayerService, StopWatchService, GoalService, CardService],
   exports: [HomeComponent]
 })

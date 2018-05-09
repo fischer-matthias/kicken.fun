@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Spieler auswählen:</h1>
+
+<div mat-dialog-content>
+  <mat-list>
+    <div *ngFor="let player of data.players">
+      <mat-list-item (click)="select(player)">
+        <h4 mat-line>{{player.vorname}} {{player.nachname}} ({{player.alter}})</h4>
+      </mat-list-item>
+      <mat-divider *ngIf="player != data.players[data.players.length -1]"></mat-divider>
+    </div>
+  </mat-list>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Abbrechen</button>
+</div>
+
