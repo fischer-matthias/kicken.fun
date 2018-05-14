@@ -1,0 +1,21 @@
+<mat-card class="search-card">
+  <mat-card-header>
+    <h1>Teamauswahl</h1>
+  </mat-card-header>
+  <mat-card-content>
+
+    <mat-form-field class="full-width">
+      <input type="text" placeholder="Teamname" aria-label="Number" matInput [formControl]="searchTerm" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectTeam($event)">
+        <mat-option *ngFor="let team of teams" [value]="team">
+          {{ team.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="!selectedTeam" mat-button disabled>Auswählen</button>
+    <button *ngIf="selectedTeam" mat-button (click)="startGame()">Auswählen</button>
+  </mat-card-actions>
+</mat-card>

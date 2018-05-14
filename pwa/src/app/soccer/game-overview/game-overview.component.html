@@ -1,0 +1,17 @@
+<mat-card class="score-board">
+  <mat-card-content>
+    <div>
+      <h1 align="center">{{time | soccerTime}}</h1>
+      <h2 align="center">Freund {{stats.own}} - {{stats.enemy}} Gegner</h2>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="!gameStatus.endFlag" mat-button (click)="switchStatus()">{{gameStatus.statusString}}</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(true)">Tor</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal()">Gegentor</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, true)">Gelbe Karte</button>
+    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, false, true)">Rote Karte</button>
+  </mat-card-actions>
+</mat-card>
+
+<soccer-time-line></soccer-time-line>

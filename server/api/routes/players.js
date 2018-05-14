@@ -6,15 +6,14 @@ module.exports = function() {
     const players = {};
     players.routes = express.Router();
 
-    players.routes.route('/:club/:team').get((req, res) => {
-        const club = req.params.club;
-        const team = req.params.team;
-
-        fupaParser.getPlayersOfTeam(club, team)
+    players.routes.route('/:team').get((req, res) => {
+        const teamId = req.params.team;
+        fupaParser.getPlayersOfTeam(teamId)
             .then((result) => {
                 res.status(200).send(result);
             })
             .catch((error) => {
+                console.log(error);
                 res.status(406).send({'status': 'nok', 'error': error});
             });
     });
