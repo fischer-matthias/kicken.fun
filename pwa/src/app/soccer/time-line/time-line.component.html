@@ -6,8 +6,8 @@
     <mat-list>
       <div *ngFor="let item of timeLineItems">
         <mat-list-item>
-          <h4 *ngIf="item?.player" mat-line>{{item?.timeInSeconds | soccerTime}}: {{item?.player?.vorname}} {{item?.player?.nachname}}</h4>
-          <h4 *ngIf="!item?.player" mat-line>{{item?.timeInSeconds | soccerTime}}: Gegner</h4>
+          <h4 *ngIf="item?.player" mat-line>{{item?.time | soccerTime}}: {{item?.player?.vorname}} {{item?.player?.nachname}}</h4>
+          <h4 *ngIf="!item?.player" mat-line>{{item?.time | soccerTime}}: Gegner</h4>
           <h4 *ngIf="item?.goal">Tor</h4>
           <h4 *ngIf="item?.card && item.yellow">Gelbe Karte</h4>
           <h4 *ngIf="item?.card && item.yellowRed">Gelbrote Karte</h4>

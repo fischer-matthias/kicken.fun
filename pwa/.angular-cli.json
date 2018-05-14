@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "soccer",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "assets/green-grey.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

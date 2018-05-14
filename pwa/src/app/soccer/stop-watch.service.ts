@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { TimePipe } from './time.pipe';
+import { Time } from './models/time';
 
 @Injectable()
 export class StopWatchService {
@@ -36,16 +37,20 @@ export class StopWatchService {
     return this.endFirstHalftimeTimestamp !== null;
   }
 
-  public getTimeInSeconds(): number {
+  public getTime(): Time {
 
-    let timeInSeconds: number;
+    const time = new Time();
 
     if (this.startSecondHalftimeTimestamp === null) {
-      timeInSeconds = (Date.now() - this.startFirstHalftimeTimestamp) / 1000;
+      time.timeInSeconds = (Date.now() - this.startFirstHalftimeTimestamp) / 1000;
+      time.secondHalf = false;
     } else {
-      timeInSeconds = ((Date.now() - this.startSecondHalftimeTimestamp) / 1000) + this.halfTimeLengthInSeconds;
+      time.timeInSeconds = ((Date.now() - this.startSecondHalftimeTimestamp) / 1000) + this.halfTimeLengthInSeconds;
+      time.secondHalf = true;
     }
 
-    return Math.floor(timeInSeconds);
+    time.timeInSeconds = Math.floor(time.timeInSeconds);
+
+    return time;
   }
 }
