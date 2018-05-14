@@ -1,8 +1,9 @@
 import { Player } from "./player";
+import { Time } from "./time";
 
 export class TimeLineItem {
     player: Player;
-    timeInSeconds: Number;
+    time: Time;
     goal: boolean;
     card: boolean;
 }

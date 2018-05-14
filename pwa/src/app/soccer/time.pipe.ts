@@ -1,24 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Time } from './models/time';
 
 @Pipe({
   name: 'soccerTime'
 })
 export class TimePipe implements PipeTransform {
 
-  transform(value: number, secondHalf?: boolean): any {
-
-    if (!secondHalf) {
-      secondHalf = false;
-    }
+  transform(value: Time): any {
 
     let strMin = '00';
     let strSec = '00';
 
-    if (value !== 0) {
-      const min = Math.floor(value / 60);
-      const sec = value % 60;
+    if (value.timeInSeconds !== 0) {
+      const min = Math.floor(value.timeInSeconds / 60);
+      const sec = value.timeInSeconds % 60;
 
-      if (!secondHalf && min >= 45) {
+      if (!value.secondHalf && min >= 45) {
         strMin = '45';
         strSec = '00';
 
@@ -32,7 +29,7 @@ export class TimePipe implements PipeTransform {
         }
 
         return strMin + ':' + strSec + ' +' + strMinDiff + ':' + strSecDiff;
-      } else if (secondHalf && min >= 90) {
+      } else if (value.secondHalf && min >= 90) {
         strMin = '90';
         strSec = '00';
 

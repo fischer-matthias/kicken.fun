@@ -9,6 +9,7 @@ import { Goal } from '../models/goal';
 import { Card } from '../models/card';
 import { Stats } from '../models/stats';
 import { GameStatus } from '../models/game-status';
+import { Time } from '../models/time';
 
 import { PlayerService } from '../player.service';
 import { StopWatchService } from '../stop-watch.service';
@@ -26,7 +27,7 @@ export class GameOverviewComponent implements OnInit {
   private players: Player[];
   private stats: Stats = new Stats();
   private gameStatus: GameStatus = new GameStatus();
-  private timeInSeconds: Number = 0;
+  private time = { timeInSeconds: 0, secondHalf: false } as Time;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -80,12 +81,12 @@ export class GameOverviewComponent implements OnInit {
   }
 
   private addGoal(player: Player = null): void {
-    const goal = { own: (player == null ? false : true), player: player, timeInSeconds: this.timeInSeconds } as Goal;
+    const goal = { own: (player == null ? false : true), player: player, time: this.time } as Goal;
     this.goalService.addGoal(goal);
   }
 
   private addCard(player: Player, yellow = false, red = false): void {
-    const card = { player: player, timeInSeconds: this.timeInSeconds, yellow: yellow, yellowRed: false, red: red } as Card;
+    const card = { player: player, time: this.time, yellow: yellow, yellowRed: false, red: red } as Card;
 
     if(this.cardService.playerHasYellowCard(player)) {
       card.yellow = false;
@@ -125,7 +126,7 @@ export class GameOverviewComponent implements OnInit {
   private getTimeInSeconds(): void {
     setTimeout(() => {
 
-      this.timeInSeconds = this.stopWatch.getTimeInSeconds();
+      this.time = this.stopWatch.getTime();
       this.gameStatus.isSecondHalf = this.stopWatch.isSecondHalf();
 
       if (this.gameStatus.runFlag) {
