@@ -15,9 +15,9 @@ import { Team } from '../models/team';
 })
 export class ClubSelectionComponent implements OnInit {
 
-  private teams: Team[] = [];
-  private selectedTeam: Team;
-	private searchTerm: FormControl = new FormControl();
+  public teams: Team[] = [];
+  public selectedTeam: Team;
+	public searchTerm: FormControl = new FormControl();
 
   constructor(private teamService: TeamService, private router: Router) {
     this.searchTerm.valueChanges
