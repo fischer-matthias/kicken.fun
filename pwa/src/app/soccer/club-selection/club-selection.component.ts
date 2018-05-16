@@ -3,8 +3,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime } from "rxjs/operators";
 
 import { TeamService } from '../team.service';
 import { Team } from '../models/team';
@@ -22,7 +21,7 @@ export class ClubSelectionComponent implements OnInit {
 
   constructor(private teamService: TeamService, private router: Router) {
     this.searchTerm.valueChanges
-   		.debounceTime(400) 
+   		.pipe(debounceTime(400))
    		.subscribe(data => {
         if(typeof data === 'string') {
           this.teamService.searchTeam(data)
