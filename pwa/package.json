@@ -1,8 +1,9 @@
 {
-  "name": "soccer-pwa-client",
+  "name": "kicken.fun-client",
   "version": "0.0.1",
-  "description": "Soccer PWA that is able to record game information",
+  "description": "kicken.fun is able to record information of a soccer game.",
   "license": "MIT",
+  "author": "Matthias Fischer",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
