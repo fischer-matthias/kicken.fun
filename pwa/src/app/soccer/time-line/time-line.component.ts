@@ -12,7 +12,7 @@ import { TimeLineItem } from '../models/time-line-item';
 })
 export class TimeLineComponent {
 
-  private timeLineItems: TimeLineItem[] = [];
+  public timeLineItems: TimeLineItem[] = [];
 
   constructor(private goalService: GoalService, private cardService: CardService) { 
     this.goalService.getGoalSubject().subscribe((item) => {
