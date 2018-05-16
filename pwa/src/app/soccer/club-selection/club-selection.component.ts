@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/debounceTime';
+
+import { Observable } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { TeamService } from '../team.service';
 import { Team } from '../models/team';
