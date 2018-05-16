@@ -1,7 +1,7 @@
 {
-  "name": "soccer-pwa-server",
+  "name": "kicken.fun-server",
   "version": "0.0.1",
-  "description": "Soccer PWA that is able to record game information",
+  "description": "kicken.fun is able to record of a soccer game.",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
