@@ -1,6 +1,14 @@
-# Soccer REST-API
-This nodejs application is used to get the players of an specific club.
+# kicken.fun server-application
+This nodejs application is able to searchs german soccer teams and afterwards crawl their team members from fupa.net.
 
-- `/players/:club/:team`
+## REST-API
 
-Possible teams are `m1`, `m2`, `m3` ...
+### Search a team
+- `/players/:clubs/:searchTerm`
+
+`searchTerm` url-encoded string.
+
+### Get team members
+- `/players/:teamID`
+
+`TeamID` numeric id from fupa.net.

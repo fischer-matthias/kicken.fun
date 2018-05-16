@@ -1,5 +1,5 @@
-# Soccer PWA
-Is an offline application that is able to record game information without the need of a network connection. The player information is directly fetched from fupa.net.
+# kicken.fun
+Is an angular pwa that is able to record game information without the need of a network connection. The player information is directly fetched from fupa.net.
 
 ## Features
 - Countdown
