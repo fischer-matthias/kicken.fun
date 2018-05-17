@@ -23,11 +23,11 @@ import { CardService } from '../card.service';
 })
 export class GameOverviewComponent implements OnInit {
 
-  private team: string;
-  private players: Player[];
-  private stats: Stats = new Stats();
-  private gameStatus: GameStatus = new GameStatus();
-  private time = { timeInSeconds: 0, secondHalf: false } as Time;
+  public team: string;
+  public players: Player[];
+  public stats: Stats = new Stats();
+  public gameStatus: GameStatus = new GameStatus();
+  public time = { timeInSeconds: 0, secondHalf: false } as Time;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private dialog: MatDialog,
