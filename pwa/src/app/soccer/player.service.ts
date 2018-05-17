@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-
 import { Team } from './models/team';
 import { Player } from './models/player';
 
@@ -14,7 +13,7 @@ export class PlayerService {
   public getPlayers(team: string): Observable<Object> {
 
     return this.httpClient
-      .get('http://localhost:8888/players/' + team);
+      .get('https://kicken.fun/api/players/' + team);
   }
 
 }
