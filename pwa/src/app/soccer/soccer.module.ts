@@ -1,6 +1,6 @@
 // Import modules
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,7 +38,7 @@ export const soccerRoutes = [
     ReactiveFormsModule,
     MatAutocompleteModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(soccerRoutes),
+    RouterModule.forRoot(soccerRoutes, {useHash: true}),
     HttpClientModule,
 
     MatToolbarModule,
@@ -52,7 +52,14 @@ export const soccerRoutes = [
   ],
   entryComponents: [PlayerSelectionDialog],
   declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe, PlayerSelectionDialog, TimeLineComponent],
-  providers: [TeamService, PlayerService, StopWatchService, GoalService, CardService],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    TeamService,
+    PlayerService, 
+    StopWatchService, 
+    GoalService, 
+    CardService
+  ],
   exports: [HomeComponent]
 })
 export class SoccerModule { }

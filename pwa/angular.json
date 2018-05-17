@@ -18,11 +18,12 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/assets/icons",
+              "src/favicon.ico",
+              "src/manifest.json"
             ],
             "styles": [
-              "src/styles.css",
-              "src/assets/green-grey.css"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -33,6 +34,7 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
+              "serviceWorker": true,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -72,12 +74,12 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "src/styles.css",
-              "src/assets/green-grey.css"
+              "src/styles.css"
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/manifest.json"
             ]
           }
         },
