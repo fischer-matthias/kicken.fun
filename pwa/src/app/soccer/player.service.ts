@@ -20,7 +20,8 @@ export class PlayerService {
         this.offlineStorage.setPlayers(teamID, players);
         playerSubject.next(players);
       }, (error) => {
-        playerSubject.next(this.offlineStorage.getPlayers(teamID));
+        let players = this.offlineStorage.getPlayers(teamID);
+        playerSubject.next(players);
       });
 
     return playerSubject;
