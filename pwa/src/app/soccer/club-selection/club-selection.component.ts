@@ -8,6 +8,7 @@ import { OfflineStorageService } from '../offline-storage.service';
 import { TeamService } from '../team.service';
 
 import { Team } from '../models/team';
+import { StoredTeam } from '../models/stored-team';
 
 @Component({
   selector: 'soccer-club-selection',
@@ -18,10 +19,15 @@ export class ClubSelectionComponent implements OnInit {
 
   public teams: Team[] = [];
   public selectedTeam: Team;
-	public searchTerm: FormControl = new FormControl();
+  public searchTerm: FormControl = new FormControl();
+  
+  public previousTeams: StoredTeam[] = [];
 
   constructor(private router: Router, private teamService: TeamService,
-              private offlineStorage: OfflineStorageService) {
+              private offlineStorage: OfflineStorageService) {}
+
+  ngOnInit() {
+    this.offlineStorage.getStoredTeams().subscribe(storedTeams => this.previousTeams = storedTeams);
 
     this.searchTerm.valueChanges
    		.pipe(debounceTime(400))
@@ -38,12 +44,15 @@ export class ClubSelectionComponent implements OnInit {
    		});
   }
 
-  ngOnInit() {}
-
   public startGame(): void {
     console.log('Route to /game-overview.');
     this.offlineStorage.addTeam(this.selectedTeam);
     this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam.value } });
+  }
+
+  public startGameWithPreviousGame(team: StoredTeam): void {
+    this.selectedTeam = team.team;
+    this.startGame();
   }
 
   public selectTeam(event: MatAutocompleteSelectedEvent): void {

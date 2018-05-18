@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { BehaviorSubject } from 'rxjs';
 
 import { StoredTeam } from './models/stored-team';
 import { Team } from './models/team';
@@ -11,8 +12,10 @@ import { Player } from './models/player';
 export class OfflineStorageService {
 
   private teams: StoredTeam[] = [];
+  private teamSubject: BehaviorSubject<StoredTeam[]>;
 
-  constructor(private localStorage: LocalStorage) { 
+  constructor(private localStorage: LocalStorage) {
+    this.teamSubject = new BehaviorSubject([]);
     this.getTeams();
   }
 
@@ -26,6 +29,10 @@ export class OfflineStorageService {
 
     this.teams.push(storedTeam);
     this.saveTeams();
+  }
+
+  public getStoredTeams(): BehaviorSubject<StoredTeam[]> {
+    return this.teamSubject;
   }
 
   public getPlayers(teamID: string): Player[] {
@@ -61,13 +68,16 @@ export class OfflineStorageService {
   }
 
   private saveTeams(): void {
-    this.localStorage.setItem('teams', this.teams).subscribe(() => {});
+    this.localStorage.setItem('teams', this.teams).subscribe(() => {
+      this.getTeams();
+    });
   }
 
   private getTeams(): any {
     this.localStorage.getItem('teams').subscribe((teams: StoredTeam[]) => {
       if(teams) {
         this.teams = teams;
+        this.teamSubject.next(this.teams);
       }
     });
   }
