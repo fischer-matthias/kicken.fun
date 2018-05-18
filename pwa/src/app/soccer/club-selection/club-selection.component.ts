@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { debounceTime } from "rxjs/operators";
 
+import { OfflineStorageService } from '../offline-storage.service';
 import { TeamService } from '../team.service';
+
 import { Team } from '../models/team';
 
 @Component({
@@ -19,7 +20,9 @@ export class ClubSelectionComponent implements OnInit {
   public selectedTeam: Team;
 	public searchTerm: FormControl = new FormControl();
 
-  constructor(private teamService: TeamService, private router: Router) {
+  constructor(private router: Router, private teamService: TeamService,
+              private offlineStorage: OfflineStorageService) {
+
     this.searchTerm.valueChanges
    		.pipe(debounceTime(400))
    		.subscribe(data => {
@@ -39,6 +42,7 @@ export class ClubSelectionComponent implements OnInit {
 
   public startGame(): void {
     console.log('Route to /game-overview.');
+    this.offlineStorage.addTeam(this.selectedTeam);
     this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam.value } });
   }
 
