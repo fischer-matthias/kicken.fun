@@ -2,6 +2,8 @@
 language: node_js
 
 before_install:
+  - node --version
+  - npm --version
   - ls -la
 
 # install dependencies
