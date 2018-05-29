@@ -1,6 +1,12 @@
 # programming language
 language: node_js
 
+# cache dependencies
+cache:
+  directories:
+    - ./pwa/node_modules
+
+# log some version information
 before_install:
   - node --version
   - npm --version
