@@ -1,0 +1,30 @@
+# programming language
+language: node_js
+node_js:
+  - "node"
+
+# cache dependencies
+cache:
+  directories:
+    - ./pwa/node_modules
+
+# log some version information
+before_install:
+  - node --version
+  - npm --version
+  - ls -la
+
+# install dependencies
+install:
+  - cd pwa
+  - npm i
+
+# log some version information
+before_script:
+  - node --version
+  - npm --version
+  - ls -la
+
+# build the pwa
+script:
+  - npm run build --prod
