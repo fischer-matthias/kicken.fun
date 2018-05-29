@@ -19,7 +19,12 @@ install:
   - cd pwa
   - npm i
 
+# log some version information
+before_script:
+  - node --version
+  - npm --version
+  - ls -la
+
 # build the pwa
 script:
-  - cd pwa
   - npm run build --prod
