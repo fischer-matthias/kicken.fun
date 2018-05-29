@@ -1,5 +1,7 @@
 # programming language
 language: node_js
+node_js:
+  - "node"
 
 # cache dependencies
 cache:
