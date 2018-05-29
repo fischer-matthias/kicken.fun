@@ -1,0 +1,15 @@
+# programming language
+language: node_js
+
+before_install:
+  - ls -la
+
+# install dependencies
+install:
+  - cd pwa
+  - npm i
+
+# build the pwa
+script:
+  - cd pwa
+  - npm run build --prod
