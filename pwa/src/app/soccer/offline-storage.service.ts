@@ -20,11 +20,11 @@ export class OfflineStorageService {
   }
 
   public addTeam(team: Team): void {
-    if(this.isTeamAvailable(team)) {
+    if (this.isTeamAvailable(team)) {
       return;
     }
 
-    let storedTeam = new StoredTeam();
+    const storedTeam = new StoredTeam();
     storedTeam.team = team;
 
     this.teams.push(storedTeam);
@@ -36,8 +36,8 @@ export class OfflineStorageService {
   }
 
   public getPlayers(teamID: string): Player[] {
-    for(var i = 0; i < this.teams.length; i++) {
-      if(this.teams[i].team.value == teamID) {
+    for (let i = 0; i < this.teams.length; i++) {
+      if (this.teams[i].team.value === teamID) {
         return this.teams[i].players;
       }
     }
@@ -46,8 +46,8 @@ export class OfflineStorageService {
   }
 
   public setPlayers(teamID: string, players: Player[]): void {
-    for(var i = 0; i < this.teams.length; i++) {
-      if(this.teams[i].team.value == teamID) {
+    for (let i = 0; i < this.teams.length; i++) {
+      if (this.teams[i].team.value === teamID) {
         this.teams[i].players = players;
         this.saveTeams();
       }
@@ -58,8 +58,8 @@ export class OfflineStorageService {
 
     let isAvailable = false;
 
-    for(let i = 0; i < this.teams.length; i++) {
-      if(this.teams[i].team.value == team.value) {
+    for (let i = 0; i < this.teams.length; i++) {
+      if (this.teams[i].team.value === team.value) {
         isAvailable = true;
       }
     }
@@ -75,7 +75,7 @@ export class OfflineStorageService {
 
   private getTeams(): any {
     this.localStorage.getItem('teams').subscribe((teams: StoredTeam[]) => {
-      if(teams) {
+      if (teams) {
         this.teams = teams;
         this.teamSubject.next(this.teams);
       }

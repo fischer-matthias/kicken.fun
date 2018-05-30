@@ -11,7 +11,7 @@ export class CardService {
   private cards: Card[] = [];
   private cardSubject: Subject<TimeLineItem>;
 
-  constructor() { 
+  constructor() {
     this.cardSubject = new Subject();
   }
 
@@ -30,7 +30,7 @@ export class CardService {
 
   public playerHasYellowCard(player: Player): boolean {
 
-    var hasYellow = false;
+    let hasYellow = false;
     this.cards.forEach((card) => {
       if(card.player.nachname === player.nachname && card.player.vorname === player.vorname) {
         hasYellow = true;
@@ -42,9 +42,9 @@ export class CardService {
 
   public playerHasRedCard(player: Player): boolean {
 
-    var hasRed = false;
+    let hasRed = false;
     this.cards.forEach((card) => {
-      if( (card.player.nachname === player.nachname && card.player.vorname === player.vorname) && (card.yellowRed || card.red) ) {
+      if ( (card.player.nachname === player.nachname && card.player.vorname === player.vorname) && (card.yellowRed || card.red) ) {
         hasRed = true;
       }
     });

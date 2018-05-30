@@ -6,7 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
+import {
+        MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule,
+        MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule
+      } from '@angular/material';
 
 // provide services
 import { TeamService } from './team.service';
@@ -55,9 +58,9 @@ export const soccerRoutes = [
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     TeamService,
-    PlayerService, 
-    StopWatchService, 
-    GoalService, 
+    PlayerService,
+    StopWatchService,
+    GoalService,
     CardService
   ],
   exports: [HomeComponent]

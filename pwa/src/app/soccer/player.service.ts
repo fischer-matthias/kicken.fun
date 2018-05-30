@@ -13,14 +13,14 @@ export class PlayerService {
   constructor(private httpClient: HttpClient, private offlineStorage: OfflineStorageService) { }
 
   public getPlayers(teamID: string): Observable<Object> {
-    let playerSubject = new Subject<Object>();
-    
+    const playerSubject = new Subject<Object>();
+
     this.httpClient
       .get('https://kicken.fun/api/players/' + teamID).subscribe((players: Player[]) => {
         this.offlineStorage.setPlayers(teamID, players);
         playerSubject.next(players);
       }, (error) => {
-        let players = this.offlineStorage.getPlayers(teamID);
+        const players = this.offlineStorage.getPlayers(teamID);
         playerSubject.next(players);
       });
 

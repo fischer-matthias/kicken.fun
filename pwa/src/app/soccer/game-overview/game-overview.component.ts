@@ -60,19 +60,19 @@ export class GameOverviewComponent implements OnInit {
   }
 
   public selectPlayerFor(goal = false, yellowCard = false, redCard = false): void {
-    if(goal || yellowCard || redCard) {
-      let dialogRef = this.dialog.open(PlayerSelectionDialog, {
+    if (goal || yellowCard || redCard) {
+      const dialogRef = this.dialog.open(PlayerSelectionDialog, {
         width: '100%',
         data: { players: this.players }
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
-        if(result !== undefined && result !== null) {
-          if(goal) {
+        if (result !== undefined && result !== null) {
+          if (goal) {
             this.addGoal(result);
-          } else if(yellowCard) {
+          } else if (yellowCard) {
             this.addCard(result, true);
-          } else if(redCard) {
+          } else if (redCard) {
             this.addCard(result, false, true);
           }
         }
@@ -88,12 +88,12 @@ export class GameOverviewComponent implements OnInit {
   private addCard(player: Player, yellow = false, red = false): void {
     const card = { player: player, time: this.time, yellow: yellow, yellowRed: false, red: red } as Card;
 
-    if(this.cardService.playerHasYellowCard(player)) {
+    if (this.cardService.playerHasYellowCard(player)) {
       card.yellow = false;
       card.yellowRed = true;
     }
 
-    if(!this.cardService.playerHasRedCard(player)) {
+    if (!this.cardService.playerHasRedCard(player)) {
       this.cardService.addCard(card);
     }
   }
