@@ -42,23 +42,24 @@ export class GameOverviewComponent implements OnInit {
         if (!params.team) {
           this.router.navigate(['/club-selection']);
         } else {
-
-          this.team = params.team;
-          this.loadPlayers();
-
-          if (params.gameid) {
-            console.log('not a new game');
-            this.gameService.loadGameById(params.gameid);
-          } else {
-            console.log('a new game');
-            this.gameService.generateGame();
-          }
-
-          this.goalService.getStatsSubject().subscribe((stats) => {
-            this.stats = stats;
-          });
+          this.prepareGame(params);
         }
       });
+  }
+
+  private prepareGame(params: any): void {
+    this.team = params.team;
+    this.loadPlayers();
+
+    if (params.gameid) {
+      this.gameService.loadGameById(params.gameid);
+    } else {
+      this.gameService.generateGame();
+    }
+
+    this.goalService.getStatsSubject().subscribe((stats) => {
+      this.stats = stats;
+    });
   }
 
   public switchStatus(): void {
