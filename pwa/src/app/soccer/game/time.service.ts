@@ -10,6 +10,10 @@ export class TimeService {
   private gameTime: GameTime;
 
   constructor() {
+    this.clear();
+  }
+
+  public clear(): void {
     this.gameTime = new GameTime();
   }
 

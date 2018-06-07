@@ -10,10 +10,15 @@ import { TimeLineItem } from '../models/time-line-item';
 @Injectable()
 export class CardService {
 
-  private cards: Card[] = [];
+  private cards: Card[];
   private cardSubject: Subject<TimeLineItem>;
 
   constructor(private timeLineService: TimeLineService) {
+    this.clear();
+  }
+
+  public clear(): void {
+    this.cards = [];
     this.cardSubject = this.timeLineService.getSubject();
   }
 

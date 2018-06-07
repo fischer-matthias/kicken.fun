@@ -16,6 +16,10 @@ export class GoalService {
   private goalSubject: Subject<TimeLineItem>;
 
   constructor(private timeLineService: TimeLineService) {
+    this.clear();
+  }
+
+  public clear(): void {
     this.stats = new Stats();
     this.statsSubject = new Subject();
 

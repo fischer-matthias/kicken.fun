@@ -10,6 +10,10 @@ export class TimeLineService {
   private timeLineSubject: Subject<TimeLineItem>;
 
   constructor() {
+    this.clear();
+  }
+
+  public clear(): void {
     this.timeLineItems = [];
     this.timeLineSubject = new Subject();
 

@@ -10,6 +10,7 @@ import { Stats } from '../models/stats';
 import { GameStatus } from '../models/game-status';
 import { Time } from '../models/time';
 
+import { GameService } from './game.service';
 import { PlayerService } from '../player.service';
 import { TimeService } from '../game/time.service';
 import { GoalService } from '../game/goal.service';
@@ -30,12 +31,9 @@ export class GameOverviewComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
               private dialog: MatDialog,
+              private gameService: GameService,
               private playerService: PlayerService, private timeService: TimeService,
               private goalService: GoalService, private cardService: CardService) {
-
-    this.goalService.getStatsSubject().subscribe((stats) => {
-      this.stats = stats;
-    });
   }
 
   ngOnInit() {
@@ -44,8 +42,21 @@ export class GameOverviewComponent implements OnInit {
         if (!params.team) {
           this.router.navigate(['/club-selection']);
         } else {
+
           this.team = params.team;
           this.loadPlayers();
+
+          if (params.gameid) {
+            console.log('not a new game');
+            this.gameService.loadGameById(params.gameid);
+          } else {
+            console.log('a new game');
+            this.gameService.generateGame();
+          }
+
+          this.goalService.getStatsSubject().subscribe((stats) => {
+            this.stats = stats;
+          });
         }
       });
   }

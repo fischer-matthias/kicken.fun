@@ -19,22 +19,35 @@ export class GameService {
               private cardService: CardService, private timeLineService: TimeLineService) {}
 
   public generateGame(): number {
+
+    this.clear();
+
     this.game = new Game();
     this.game.id = Date.now();
     this.game.gameTime = new GameTime();
     this.game.goals = [];
     this.game.cards = [];
     this.game.timeLineItems = [];
+
     return this.game.id;
   }
 
   public loadGameById(id: number): void {
+    this.clear();
     this.loadGameInformations(id);
   }
 
   public saveState(): void {
     this.collectCurrentInformation();
     this.writeToDatabase();
+  }
+
+  private clear(): void {
+    this.timeService.clear();
+    this.goalService.clear();
+    this.goalService.clear();
+    this.cardService.clear();
+    this.timeLineService.clear();
   }
 
   private collectCurrentInformation(): void {
