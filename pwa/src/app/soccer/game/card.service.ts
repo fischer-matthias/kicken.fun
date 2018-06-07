@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { Card } from './models/card';
-import { Player } from './models/player';
-import { TimeLineItem } from './models/time-line-item';
+import { TimeLineService } from './time-line.service';
+
+import { Card } from '../models/card';
+import { Player } from '../models/player';
+import { TimeLineItem } from '../models/time-line-item';
 
 @Injectable()
 export class CardService {
@@ -11,28 +13,24 @@ export class CardService {
   private cards: Card[] = [];
   private cardSubject: Subject<TimeLineItem>;
 
-  constructor() {
-    this.cardSubject = new Subject();
+  constructor(private timeLineService: TimeLineService) {
+    this.cardSubject = this.timeLineService.getSubject();
   }
 
   public addCard(card: Card): void {
     this.cards.push(card);
-    this.cardSubject.next(card);
+    this.addCardToTimeLine(card);
   }
 
   public getCards(): Card[] {
     return this.cards;
   }
 
-  public getCardSubject(): Subject<TimeLineItem> {
-    return this.cardSubject;
-  }
-
   public playerHasYellowCard(player: Player): boolean {
 
     let hasYellow = false;
     this.cards.forEach((card) => {
-      if(card.player.nachname === player.nachname && card.player.vorname === player.vorname) {
+      if (card.player.nachname === player.nachname && card.player.vorname === player.vorname) {
         hasYellow = true;
       }
     });
@@ -50,6 +48,11 @@ export class CardService {
     });
 
     return hasRed;
+  }
+
+  private addCardToTimeLine(card: Card): void {
+    card.card = true;
+    this.cardSubject.next(card);
   }
 
 }

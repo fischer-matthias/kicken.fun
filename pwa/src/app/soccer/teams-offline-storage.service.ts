@@ -9,7 +9,7 @@ import { Player } from './models/player';
 @Injectable({
   providedIn: 'root'
 })
-export class OfflineStorageService {
+export class TeamsOfflineStorageService {
 
   private teams: StoredTeam[] = [];
   private teamSubject: BehaviorSubject<StoredTeam[]>;

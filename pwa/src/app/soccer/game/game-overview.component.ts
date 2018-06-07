@@ -12,9 +12,9 @@ import { GameStatus } from '../models/game-status';
 import { Time } from '../models/time';
 
 import { PlayerService } from '../player.service';
-import { StopWatchService } from '../stop-watch.service';
-import { GoalService } from '../goal.service';
-import { CardService } from '../card.service';
+import { TimeService } from '../game/time.service';
+import { GoalService } from '../game/goal.service';
+import { CardService } from '../game/card.service';
 
 @Component({
   selector: 'soccer-game-overview',
@@ -31,7 +31,7 @@ export class GameOverviewComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
               private dialog: MatDialog,
-              private playerService: PlayerService, private stopWatch: StopWatchService,
+              private playerService: PlayerService, private timeService: TimeService,
               private goalService: GoalService, private cardService: CardService) {
 
     this.goalService.getStatsSubject().subscribe((stats) => {
@@ -107,7 +107,7 @@ export class GameOverviewComponent implements OnInit {
 
   private startTimer(): void {
     this.gameStatus.runFlag = true;
-    this.stopWatch.start();
+    this.timeService.start();
     this.getTimeInSeconds();
 
     if (this.gameStatus.isSecondHalf) {
@@ -119,15 +119,15 @@ export class GameOverviewComponent implements OnInit {
 
   private stopTimer(): void {
     this.gameStatus.runFlag = false;
-    this.stopWatch.stop();
+    this.timeService.stop();
     this.gameStatus.statusString = 'Anpfiff';
   }
 
   private getTimeInSeconds(): void {
     setTimeout(() => {
 
-      this.time = this.stopWatch.getTime();
-      this.gameStatus.isSecondHalf = this.stopWatch.isSecondHalf();
+      this.time = this.timeService.getTime();
+      this.gameStatus.isSecondHalf = this.timeService.isSecondHalf();
 
       if (this.gameStatus.runFlag) {
         this.getTimeInSeconds();

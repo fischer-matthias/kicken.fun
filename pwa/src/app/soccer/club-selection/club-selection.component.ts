@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 
-import { OfflineStorageService } from '../offline-storage.service';
+import { TeamsOfflineStorageService } from '../teams-offline-storage.service';
 import { TeamService } from '../team.service';
 
 import { Team } from '../models/team';
@@ -24,10 +24,10 @@ export class ClubSelectionComponent implements OnInit {
   public previousTeams: StoredTeam[] = [];
 
   constructor(private router: Router, private teamService: TeamService,
-              private offlineStorage: OfflineStorageService) {}
+              private teamsOfflineStorage: TeamsOfflineStorageService) {}
 
   ngOnInit() {
-    this.offlineStorage.getStoredTeams().subscribe(storedTeams => this.previousTeams = storedTeams);
+    this.teamsOfflineStorage.getStoredTeams().subscribe(storedTeams => this.previousTeams = storedTeams);
 
     this.searchTerm.valueChanges
     .pipe(debounceTime(400))
@@ -46,7 +46,7 @@ export class ClubSelectionComponent implements OnInit {
 
   public startGame(): void {
     console.log('Route to /game-overview.');
-    this.offlineStorage.addTeam(this.selectedTeam);
+    this.teamsOfflineStorage.addTeam(this.selectedTeam);
     this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam.value } });
   }
 
