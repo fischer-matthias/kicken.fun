@@ -25,7 +25,7 @@ import { HomeComponent } from './home/home.component';
 import { ClubSelectionComponent } from './club-selection/club-selection.component';
 import { GameOverviewComponent } from './game/game-overview.component';
 import { TimePipe } from './time.pipe';
-import { PlayerSelectionDialog } from './player-selection-dialog/player-selection-dialog.component';
+import { PlayerSelectionDialog } from './game/player-selection-dialog/player-selection-dialog.component';
 import { TimeLineComponent } from './game/time-line/time-line.component';
 
 // declare routes
