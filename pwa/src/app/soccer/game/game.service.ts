@@ -18,12 +18,13 @@ export class GameService {
               private timeService: TimeService, private goalService: GoalService,
               private cardService: CardService, private timeLineService: TimeLineService) {}
 
-  public generateGame(): number {
+  public generateGame(teamId: string): string {
 
     this.clear();
 
     this.game = new Game();
-    this.game.id = Date.now();
+    this.game.id = Date.now() + '';
+    this.game.teamId = teamId;
     this.game.gameTime = new GameTime();
     this.game.goals = [];
     this.game.cards = [];
@@ -32,7 +33,7 @@ export class GameService {
     return this.game.id;
   }
 
-  public loadGameById(id: number): void {
+  public loadGameById(id: string): void {
     this.clear();
     this.loadGameInformations(id);
   }
@@ -60,12 +61,12 @@ export class GameService {
 
   private writeToDatabase(): void {
     this.localStorage.setItem(this.game.id + '', this.game).subscribe(() => {
-      this.loadGameInformations(this.game.id);
+      console.log('Saved game.');
     });
   }
 
-  private loadGameInformations(id: number): void {
-    this.localStorage.getItem(id + '').subscribe((game: Game) => {
+  private loadGameInformations(id: string): void {
+    this.localStorage.getItem(id).subscribe((game: Game) => {
       this.game = game;
       this.setGameInformations();
     });

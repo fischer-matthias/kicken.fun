@@ -54,12 +54,19 @@ export class GameOverviewComponent implements OnInit {
     if (params.gameid) {
       this.gameService.loadGameById(params.gameid);
     } else {
-      this.gameService.generateGame();
+      this.gameService.generateGame(this.team);
     }
 
     this.goalService.getStatsSubject().subscribe((stats) => {
       this.stats = stats;
     });
+  }
+
+  private loadPlayers(): void {
+    this.playerService.getPlayers(this.team)
+      .subscribe(data => {
+        this.players = data as Player[];
+      });
   }
 
   public switchStatus(): void {
@@ -94,6 +101,8 @@ export class GameOverviewComponent implements OnInit {
   private addGoal(player: Player = null): void {
     const goal = { own: (player == null ? false : true), player: player, time: this.time } as Goal;
     this.goalService.addGoal(goal);
+
+    this.saveGame();
   }
 
   private addCard(player: Player, yellow = false, red = false): void {
@@ -107,13 +116,8 @@ export class GameOverviewComponent implements OnInit {
     if (!this.cardService.playerHasRedCard(player)) {
       this.cardService.addCard(card);
     }
-  }
 
-  private loadPlayers(): void {
-    this.playerService.getPlayers(this.team)
-      .subscribe(data => {
-        this.players = data as Player[];
-      });
+    this.saveGame();
   }
 
   private startTimer(): void {
@@ -126,12 +130,16 @@ export class GameOverviewComponent implements OnInit {
     } else {
       this.gameStatus.statusString = 'Halbzeit';
     }
+
+    this.saveGame();
   }
 
   private stopTimer(): void {
     this.gameStatus.runFlag = false;
     this.timeService.stop();
     this.gameStatus.statusString = 'Anpfiff';
+
+    this.saveGame();
   }
 
   private getTimeInSeconds(): void {
@@ -144,6 +152,10 @@ export class GameOverviewComponent implements OnInit {
         this.getTimeInSeconds();
       }
     }, 1000);
+  }
+
+  private saveGame(): void {
+    this.gameService.saveState();
   }
 
 }

@@ -5,7 +5,8 @@ import { Card } from './card';
 import { TimeLineItem } from './time-line-item';
 
 export class Game {
-  id: number;
+  id: string;
+  teamId: string;
   gameTime: GameTime;
   goals: Goal[];
   stats: Stats;
