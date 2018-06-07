@@ -20,11 +20,21 @@ export class TimeLineService {
 
   public setItems(items: TimeLineItem[]): void {
     this.timeLineItems = items;
+    this.floodTimeLine();
+  }
+
+  public getItems(): TimeLineItem[] {
+    return this.timeLineItems;
   }
 
   public getSubject(): Subject<TimeLineItem> {
     return this.timeLineSubject;
   }
 
+  private floodTimeLine(): void {
+    this.timeLineItems.forEach((timeLineItem: TimeLineItem) => {
+      this.timeLineSubject.next(timeLineItem);
+    });
+  }
 
 }

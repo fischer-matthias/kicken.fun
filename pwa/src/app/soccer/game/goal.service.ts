@@ -27,10 +27,6 @@ export class GoalService {
     return this.statsSubject;
   }
 
-  public getGoals(): Goal[] {
-    return this.goals;
-  }
-
   public addGoal(goal: Goal): void {
     this.goals.push(goal);
     if (goal.own) {
@@ -46,6 +42,25 @@ export class GoalService {
   private addGoalToTimeLine(goal: Goal): void {
     goal.goal = true;
     this.goalSubject.next(goal);
+  }
+
+  // These methods are just to save / reset stats
+
+  public getGoals(): Goal[] {
+    return this.goals;
+  }
+
+  public setGoals(goals: Goal[]): void {
+    this.goals = goals;
+  }
+
+  public getStats(): Stats {
+    return this.stats;
+  }
+
+  public setStats(stats: Stats): void {
+    this.stats = stats;
+    this.statsSubject.next(stats);
   }
 
 }

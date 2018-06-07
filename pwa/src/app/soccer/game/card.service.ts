@@ -22,10 +22,6 @@ export class CardService {
     this.addCardToTimeLine(card);
   }
 
-  public getCards(): Card[] {
-    return this.cards;
-  }
-
   public playerHasYellowCard(player: Player): boolean {
 
     let hasYellow = false;
@@ -53,6 +49,16 @@ export class CardService {
   private addCardToTimeLine(card: Card): void {
     card.card = true;
     this.cardSubject.next(card);
+  }
+
+  // These methods are just to save / reset stats
+
+  public getCards(): Card[] {
+    return this.cards;
+  }
+
+  public setCards(cards: Card[]): void {
+    this.cards = cards;
   }
 
 }
