@@ -55,7 +55,11 @@ export class ClubSelectionComponent implements OnInit {
     this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam.value } });
   }
 
-  public startGameWithPreviousGame(team: StoredTeam): void {
+  public startGameWithPreviousGame(game: Game): void {
+    // todo
+  }
+
+  public startGameWithPreviousTeam(team: StoredTeam): void {
     this.selectedTeam = team.team;
     this.startGame();
   }
