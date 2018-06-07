@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+
 import { TimeService } from './time.service';
 import { GoalService } from './goal.service';
 import { CardService } from './card.service';
 import { TimeLineService } from './time-line.service';
-import { Goal } from '../models/goal';
-import { Card } from '../models/card';
-import { TimeLineItem } from '../models/time-line-item';
-import { Stats } from '../models/stats';
+
 import { GameTime } from '../models/game-time';
+import { Game } from '../models/game';
 
 @Injectable()
 export class GameService {
 
-  private id: number;
+  private game: Game;
 
-  private gameTime: GameTime;
-  private goals: Goal[];
-  private stats: Stats;
-  private cards: Card[];
-  private timeLineItems: TimeLineItem[];
-
-  constructor(private timeService: TimeService, private goalService: GoalService,
+  constructor(private localStorage: LocalStorage,
+              private timeService: TimeService, private goalService: GoalService,
               private cardService: CardService, private timeLineService: TimeLineService) {}
 
   public generateGame(): number {
-    return this.id = Date.now();
+    this.game = new Game();
+    this.game.id = Date.now();
+    this.game.gameTime = new GameTime();
+    this.game.goals = [];
+    this.game.cards = [];
+    this.game.timeLineItems = [];
+    return this.game.id;
   }
 
-  public setId(id: number): void {
-    this.id = id;
-    this.loadGameInformations();
+  public loadGameById(id: number): void {
+    this.loadGameInformations(id);
   }
 
   public saveState(): void {
@@ -38,18 +38,31 @@ export class GameService {
   }
 
   private collectCurrentInformation(): void {
-    this.gameTime = this.timeService.getGameTime();
-    this.goals = this.goalService.getGoals();
-    this.stats = this.goalService.getStats();
-    this.cards = this.cardService.getCards();
-    this.timeLineItems = this.timeLineService.getItems();
+    this.game.gameTime = this.timeService.getGameTime();
+    this.game.goals = this.goalService.getGoals();
+    this.game.stats = this.goalService.getStats();
+    this.game.cards = this.cardService.getCards();
+    this.game.timeLineItems = this.timeLineService.getItems();
   }
 
   private writeToDatabase(): void {
-
+    this.localStorage.setItem(this.game.id + '', this.game).subscribe(() => {
+      this.loadGameInformations(this.game.id);
+    });
   }
 
-  private loadGameInformations(): void {
-    // load times, cards, goals by id
+  private loadGameInformations(id: number): void {
+    this.localStorage.getItem(id + '').subscribe((game: Game) => {
+      this.game = game;
+      this.setGameInformations();
+    });
+  }
+
+  private setGameInformations(): void {
+    this.timeService.setGameTime(this.game.gameTime);
+    this.goalService.setGoals(this.game.goals);
+    this.goalService.setStats(this.game.stats);
+    this.cardService.setCards(this.game.cards);
+    this.timeLineService.setItems(this.game.timeLineItems);
   }
 }

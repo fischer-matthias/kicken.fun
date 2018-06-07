@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { PlayerSelectionDialog } from '../player-selection-dialog/player-selection-dialog.component';
 
-import { Team } from '../models/team';
 import { Player } from '../models/player';
 import { Goal } from '../models/goal';
 import { Card } from '../models/card';
