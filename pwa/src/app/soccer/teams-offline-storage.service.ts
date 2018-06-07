@@ -73,7 +73,7 @@ export class TeamsOfflineStorageService {
     });
   }
 
-  private getTeams(): any {
+  private getTeams(): void {
     this.localStorage.getItem('teams').subscribe((teams: StoredTeam[]) => {
       if (teams) {
         this.teams = teams;

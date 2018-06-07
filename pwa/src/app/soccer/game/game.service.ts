@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { GameOfflineStorageService } from './../game-offline-storage.service';
 
 import { TimeService } from './time.service';
 import { GoalService } from './goal.service';
@@ -14,7 +14,7 @@ export class GameService {
 
   private game: Game;
 
-  constructor(private localStorage: LocalStorage,
+  constructor(private gameOfflineStorage: GameOfflineStorageService,
               private timeService: TimeService, private goalService: GoalService,
               private cardService: CardService, private timeLineService: TimeLineService) {}
 
@@ -60,16 +60,18 @@ export class GameService {
   }
 
   private writeToDatabase(): void {
-    this.localStorage.setItem(this.game.id + '', this.game).subscribe(() => {
-      console.log('Saved game.');
-    });
+    this.gameOfflineStorage.saveGame(this.game);
   }
 
   private loadGameInformations(id: string): void {
-    this.localStorage.getItem(id).subscribe((game: Game) => {
-      this.game = game;
-      this.setGameInformations();
-    });
+    this.game = this.gameOfflineStorage.getGame(id);
+
+    if (this.game === null) {
+      console.log('No game found...');
+      return;
+    }
+
+    this.setGameInformations();
   }
 
   private setGameInformations(): void {
