@@ -7,6 +7,7 @@ import { CardService } from './card.service';
 import { TimeLineService } from './time-line.service';
 
 import { GameTime } from '../models/game-time';
+import { GameStatus } from './../models/game-status';
 import { Game } from '../models/game';
 
 @Injectable()
@@ -26,6 +27,7 @@ export class GameService {
     this.game.id = Date.now() + '';
     this.game.teamId = teamId;
     this.game.gameTime = new GameTime();
+    this.game.gameStatus = new GameStatus();
     this.game.goals = [];
     this.game.cards = [];
     this.game.timeLineItems = [];
@@ -53,6 +55,7 @@ export class GameService {
 
   private collectCurrentInformation(): void {
     this.game.gameTime = this.timeService.getGameTime();
+    this.game.gameStatus = this.timeService.getGameStatus();
     this.game.goals = this.goalService.getGoals();
     this.game.stats = this.goalService.getStats();
     this.game.cards = this.cardService.getCards();
@@ -76,6 +79,7 @@ export class GameService {
 
   private setGameInformations(): void {
     this.timeService.setGameTime(this.game.gameTime);
+    this.timeService.setGameStatus(this.game.gameStatus);
     this.goalService.setGoals(this.game.goals);
     this.goalService.setStats(this.game.stats);
     this.cardService.setCards(this.game.cards);

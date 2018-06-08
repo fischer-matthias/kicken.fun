@@ -1,3 +1,4 @@
+import { GameStatus } from './game-status';
 import { GameTime } from './game-time';
 import { Goal } from './goal';
 import { Stats } from './stats';
@@ -8,6 +9,7 @@ export class Game {
   id: string;
   teamId: string;
   gameTime: GameTime;
+  gameStatus: GameStatus;
   goals: Goal[];
   stats: Stats;
   cards: Card[];

@@ -51,14 +51,18 @@ export class GameOverviewComponent implements OnInit {
     this.team = params.team;
     this.loadPlayers();
 
-    if (params.gameid) {
-      this.gameService.loadGameById(params.gameid);
+    if (params.gameId) {
+      this.gameService.loadGameById(params.gameId);
     } else {
       this.gameService.generateGame(this.team);
     }
 
     this.goalService.getStatsSubject().subscribe((stats) => {
       this.stats = stats;
+    });
+
+    this.timeService.getTimeStatusSubject().subscribe((gameStatus: GameStatus) => {
+      this.gameStatus = gameStatus;
     });
   }
 
@@ -121,24 +125,15 @@ export class GameOverviewComponent implements OnInit {
   }
 
   private startTimer(): void {
-    this.gameStatus.runFlag = true;
+
     this.timeService.start();
     this.getTimeInSeconds();
-
-    if (this.gameStatus.isSecondHalf) {
-      this.gameStatus.statusString = 'Abpfiff';
-    } else {
-      this.gameStatus.statusString = 'Halbzeit';
-    }
-
     this.saveGame();
   }
 
   private stopTimer(): void {
-    this.gameStatus.runFlag = false;
-    this.timeService.stop();
-    this.gameStatus.statusString = 'Anpfiff';
 
+    this.timeService.stop();
     this.saveGame();
   }
 
@@ -146,7 +141,6 @@ export class GameOverviewComponent implements OnInit {
     setTimeout(() => {
 
       this.time = this.timeService.getTime();
-      this.gameStatus.isSecondHalf = this.timeService.isSecondHalf();
 
       if (this.gameStatus.runFlag) {
         this.getTimeInSeconds();
