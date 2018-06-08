@@ -50,13 +50,14 @@ export class ClubSelectionComponent implements OnInit {
   }
 
   public startGame(): void {
-    console.log('Route to /game-overview.');
+    console.log('Start new game with new team ' + this.selectedTeam.name + '.');
     this.teamsOfflineStorage.addTeam(this.selectedTeam);
     this.router.navigate(['/game-overview'], { queryParams: { team: this.selectedTeam.value } });
   }
 
   public startGameWithPreviousGame(game: Game): void {
-    // todo
+    console.log('Reenter existing game ' + game.id + '.');
+    this.router.navigate(['/game-overview'], { queryParams: { team: game.teamId, gameId: game.id } });
   }
 
   public startGameWithPreviousTeam(team: StoredTeam): void {

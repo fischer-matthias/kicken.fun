@@ -20,7 +20,7 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="previousGames" class="previous-teams">
+<mat-card *ngIf="previousGames.length > 0" class="previous-teams">
   <mat-card-header>
     <h1>Vorherige Spiele</h1>
   </mat-card-header>
@@ -33,7 +33,7 @@
   </mat-card-content>
 </mat-card>
 
-<mat-card *ngIf="previousTeams" class="previous-teams">
+<mat-card *ngIf="previousTeams.length > 0" class="previous-teams">
   <mat-card-header>
     <h1>Vorherige Teams</h1>
   </mat-card-header>
