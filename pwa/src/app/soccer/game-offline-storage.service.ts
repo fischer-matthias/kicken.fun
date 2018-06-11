@@ -22,12 +22,18 @@ export class GameOfflineStorageService {
     return this.gamesSubject;
   }
 
-  public getGames(): void {
-    this.localStorage.getItem('games').subscribe((games: Game[]) => {
-      if (games) {
-        this.games = games;
-        this.gamesSubject.next(this.games);
-      }
+  public getGames(): Promise<boolean> {
+    console.log('Load games.');
+    return new Promise((resolve, reject) => {
+      this.localStorage.getItem('games').subscribe((games: Game[]) => {
+        if (games) {
+          this.games = games;
+          this.gamesSubject.next(this.games);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
     });
   }
 

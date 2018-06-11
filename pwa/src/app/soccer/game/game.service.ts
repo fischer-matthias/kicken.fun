@@ -81,11 +81,24 @@ export class GameService {
     this.game = this.gameOfflineStorage.getGame(id);
 
     if (this.game === null) {
-      console.error('No game found...');
+      console.error('No game in cache!');
+
+      this.gameOfflineStorage.getGames().then((areGamesAvailable) => {
+        if (areGamesAvailable) {
+          this.loadGameInformations(id);
+        } else {
+          console.error('Game ' + id + ' not found!');
+          return;
+        }
+      }).catch((error) => {
+        console.error(error);
+        return;
+      });
+
       return;
     }
 
-    console.log('Load game informations ...');
+    console.log('Load game informations.');
     this.setGameInformations();
   }
 
