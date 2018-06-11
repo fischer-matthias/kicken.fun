@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { PlayerSelectionDialog } from './player-selection-dialog/player-selection-dialog.component';
 
@@ -21,13 +22,19 @@ import { CardService } from '../game/card.service';
   templateUrl: './game-overview.component.html',
   styleUrls: ['./game-overview.component.css']
 })
-export class GameOverviewComponent implements OnInit {
+export class GameOverviewComponent implements OnInit, OnDestroy {
 
   public team: string;
   public players: Player[];
   public stats: Stats = new Stats();
   public gameStatus: GameStatus = new GameStatus();
   public time = { timeInSeconds: 0, secondHalf: false } as Time;
+
+  private second = 1000;
+
+  private resetSubscription: Subscription;
+  private goalStatsSubscription: Subscription;
+  private timeStatusSubscrtiption: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -47,7 +54,18 @@ export class GameOverviewComponent implements OnInit {
       });
   }
 
+  ngOnDestroy(): void {
+    if (this.resetSubscription && this.goalStatsSubscription && this.timeStatusSubscrtiption) {
+      this.resetSubscription.unsubscribe();
+      this.goalStatsSubscription.unsubscribe();
+      this.timeStatusSubscrtiption.unsubscribe();
+    }
+  }
+
   private prepareGame(params: any): void {
+
+    this.subscribeResetSubject();
+
     this.team = params.team;
     this.loadPlayers();
 
@@ -56,13 +74,25 @@ export class GameOverviewComponent implements OnInit {
     } else {
       this.gameService.generateGame(this.team);
     }
+  }
 
-    this.goalService.getStatsSubject().subscribe((stats) => {
-      this.stats = stats;
-    });
+  private subscribeResetSubject(): void {
+    this.resetSubscription = this.gameService.getResetSubject().subscribe((reset: boolean) => {
+      if (reset) {
+        this.goalStatsSubscription = this.goalService.getStatsSubject().subscribe((stats: Stats) => {
+          this.stats = stats;
+        });
 
-    this.timeService.getTimeStatusSubject().subscribe((gameStatus: GameStatus) => {
-      this.gameStatus = gameStatus;
+        this.timeStatusSubscrtiption = this.timeService.getTimeStatusSubject().subscribe((gameStatus: GameStatus) => {
+
+          this.gameStatus = gameStatus;
+
+          if (this.gameStatus.runFlag) {
+            this.second = 0;
+            this.getTimeInSeconds();
+          }
+        });
+      }
     });
   }
 
@@ -140,12 +170,13 @@ export class GameOverviewComponent implements OnInit {
   private getTimeInSeconds(): void {
     setTimeout(() => {
 
+      this.second = 1000;
       this.time = this.timeService.getTime();
 
       if (this.gameStatus.runFlag) {
         this.getTimeInSeconds();
       }
-    }, 1000);
+    }, this.second);
   }
 
   private saveGame(): void {

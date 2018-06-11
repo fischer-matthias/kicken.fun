@@ -11,10 +11,6 @@ export class TimeLineService {
 
   constructor() {
     this.clear();
-  }
-
-  public clear(): void {
-    this.timeLineItems = [];
     this.timeLineSubject = new Subject();
 
     this.timeLineSubject.subscribe((timeLineItem: TimeLineItem) => {
@@ -22,9 +18,12 @@ export class TimeLineService {
     });
   }
 
+  public clear(): void {
+    this.timeLineItems = [];
+  }
+
   public setItems(items: TimeLineItem[]): void {
-    this.timeLineItems = items;
-    this.floodTimeLine();
+    this.floodTimeLine(items);
   }
 
   public getItems(): TimeLineItem[] {
@@ -35,8 +34,8 @@ export class TimeLineService {
     return this.timeLineSubject;
   }
 
-  private floodTimeLine(): void {
-    this.timeLineItems.forEach((timeLineItem: TimeLineItem) => {
+  private floodTimeLine(items: TimeLineItem[]): void {
+    items.forEach((timeLineItem: TimeLineItem) => {
       this.timeLineSubject.next(timeLineItem);
     });
   }

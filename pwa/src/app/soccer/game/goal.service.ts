@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 import { Stats } from '../models/stats';
 import { Goal } from '../models/goal';
@@ -10,7 +10,7 @@ import { TimeLineService } from './time-line.service';
 export class GoalService {
 
   private stats: Stats;
-  private statsSubject: Subject<Stats>;
+  private statsSubject: BehaviorSubject<Stats>;
 
   private goals: Goal[];
   private goalSubject: Subject<TimeLineItem>;
@@ -21,25 +21,27 @@ export class GoalService {
 
   public clear(): void {
     this.stats = new Stats();
-    this.statsSubject = new Subject();
+    this.statsSubject = new BehaviorSubject(this.stats);
 
     this.goals = [];
     this.goalSubject = this.timeLineService.getSubject();
   }
 
-  public getStatsSubject(): Subject<Stats> {
+  public getStatsSubject(): BehaviorSubject<Stats> {
     return this.statsSubject;
   }
 
   public addGoal(goal: Goal): void {
+
     this.goals.push(goal);
+
     if (goal.own) {
       this.stats.own++;
     } else {
       this.stats.enemy++;
     }
-    this.statsSubject.next(this.stats);
 
+    this.statsSubject.next(this.stats);
     this.addGoalToTimeLine(goal);
   }
 

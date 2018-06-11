@@ -45,6 +45,7 @@ export class GameOfflineStorageService {
   }
 
   public getGame(id: string): Game {
+
     for (let i = 0; i < this.games.length; i++) {
       if (this.games[i].id === id) {
         return this.games[i];

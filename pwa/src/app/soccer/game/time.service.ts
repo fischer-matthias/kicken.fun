@@ -89,6 +89,7 @@ export class TimeService {
 
   public setGameStatus(gameStatus: GameStatus): void {
     this.gameStatus = gameStatus;
+    this.gameStatusSubject.next(this.gameStatus);
   }
 
   public getGameTime(): GameTime {

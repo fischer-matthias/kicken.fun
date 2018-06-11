@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { GameOfflineStorageService } from './../game-offline-storage.service';
 
 import { TimeService } from './time.service';
@@ -14,10 +15,17 @@ import { Game } from '../models/game';
 export class GameService {
 
   private game: Game;
+  private resetSubject: Subject<boolean>;
 
   constructor(private gameOfflineStorage: GameOfflineStorageService,
               private timeService: TimeService, private goalService: GoalService,
-              private cardService: CardService, private timeLineService: TimeLineService) {}
+              private cardService: CardService, private timeLineService: TimeLineService) {
+    this.resetSubject = new Subject();
+  }
+
+  public getResetSubject(): Subject<boolean> {
+    return this.resetSubject;
+  }
 
   public generateGame(teamId: string): string {
 
@@ -32,6 +40,7 @@ export class GameService {
     this.game.cards = [];
     this.game.timeLineItems = [];
 
+    this.resetRemoteSubjects();
     return this.game.id;
   }
 
@@ -46,11 +55,13 @@ export class GameService {
   }
 
   private clear(): void {
+    this.timeLineService.clear();
     this.timeService.clear();
     this.goalService.clear();
     this.goalService.clear();
     this.cardService.clear();
-    this.timeLineService.clear();
+
+    this.resetRemoteSubjects();
   }
 
   private collectCurrentInformation(): void {
@@ -70,10 +81,11 @@ export class GameService {
     this.game = this.gameOfflineStorage.getGame(id);
 
     if (this.game === null) {
-      console.log('No game found...');
+      console.error('No game found...');
       return;
     }
 
+    console.log('Load game informations ...');
     this.setGameInformations();
   }
 
@@ -84,5 +96,9 @@ export class GameService {
     this.goalService.setStats(this.game.stats);
     this.cardService.setCards(this.game.cards);
     this.timeLineService.setItems(this.game.timeLineItems);
+  }
+
+  private resetRemoteSubjects(): void {
+    this.resetSubject.next(true);
   }
 }
