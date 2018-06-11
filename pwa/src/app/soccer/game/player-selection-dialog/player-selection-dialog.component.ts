@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Player } from '../models/player';
+import { Player } from '../../models/player';
 
 @Component({
   selector: 'soccer-player-selection-dialog',
@@ -15,7 +15,7 @@ export class PlayerSelectionDialog {
   public select(player: Player): void {
     this.dialogRef.close(player);
   }
-  
+
   public cancel(): void {
     this.dialogRef.close();
   }

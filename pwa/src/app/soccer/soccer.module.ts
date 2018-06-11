@@ -6,22 +6,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule, MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule } from '@angular/material';
+import {
+        MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule,
+        MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule
+      } from '@angular/material';
 
 // provide services
 import { TeamService } from './team.service';
 import { PlayerService } from './player.service';
-import { StopWatchService } from './stop-watch.service';
-import { GoalService } from './goal.service';
-import { CardService } from './card.service';
+import { GameService } from './game/game.service';
+import { TimeLineService } from './game/time-line.service';
+import { TimeService } from './game/time.service';
+import { GoalService } from './game/goal.service';
+import { CardService } from './game/card.service';
 
 // declare components
 import { HomeComponent } from './home/home.component';
 import { ClubSelectionComponent } from './club-selection/club-selection.component';
-import { GameOverviewComponent } from './game-overview/game-overview.component';
+import { GameOverviewComponent } from './game/game-overview.component';
 import { TimePipe } from './time.pipe';
-import { PlayerSelectionDialog } from './player-selection-dialog/player-selection-dialog.component';
-import { TimeLineComponent } from './time-line/time-line.component';
+import { PlayerSelectionDialog } from './game/player-selection-dialog/player-selection-dialog.component';
+import { TimeLineComponent } from './game/time-line/time-line.component';
 
 // declare routes
 export const soccerRoutes = [
@@ -55,9 +60,11 @@ export const soccerRoutes = [
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     TeamService,
-    PlayerService, 
-    StopWatchService, 
-    GoalService, 
+    PlayerService,
+    GameService,
+    TimeLineService,
+    TimeService,
+    GoalService,
     CardService
   ],
   exports: [HomeComponent]
