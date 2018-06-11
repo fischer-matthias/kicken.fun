@@ -19,3 +19,29 @@
     <button *ngIf="selectedTeam" mat-button (click)="startGame()">Auswählen</button>
   </mat-card-actions>
 </mat-card>
+
+<mat-card *ngIf="previousGames.length > 0" class="previous-teams">
+  <mat-card-header>
+    <h1>Vorherige Spiele</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let game of previousGames" (click)="startGameWithPreviousGame(game)">
+        <h4 mat-line>{{game?.teamId}}</h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="previousTeams.length > 0" class="previous-teams">
+  <mat-card-header>
+    <h1>Vorherige Teams</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let team of previousTeams" (click)="startGameWithPreviousTeam(team)">
+        <h4 mat-line>{{team?.team?.name}}</h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
