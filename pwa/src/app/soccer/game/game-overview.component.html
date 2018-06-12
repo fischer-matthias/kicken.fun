@@ -5,7 +5,7 @@
       <h2 align="center">Freund {{stats.own}} - {{stats.enemy}} Gegner</h2>
     </div>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="!gameStatus.endFlag">
     <button *ngIf="!gameStatus.endFlag" mat-button (click)="switchStatus()">{{gameStatus.statusString}}</button>
     <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(true)">Tor</button>
     <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal()">Gegentor</button>
