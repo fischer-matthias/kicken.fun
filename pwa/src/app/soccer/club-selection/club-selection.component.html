@@ -27,7 +27,7 @@
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let game of previousGames" (click)="startGameWithPreviousGame(game)">
-        <h4 mat-line>{{game?.teamId}}</h4>
+        <h4 mat-line>{{game?.team?.name}} {{game?.stats?.own}} : {{game?.stats?.enemy}}</h4>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

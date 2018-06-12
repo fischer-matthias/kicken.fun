@@ -55,6 +55,7 @@ export class TimeService {
       this.gameTime.endFirstHalftimeTimestamp = Date.now();
     } else if (this.gameTime.endSecondHalftimeTimestamp === null) {
       this.gameTime.endSecondHalftimeTimestamp = Date.now();
+      this.gameStatus.endFlag = true;
     }
 
     this.gameStatus.statusString = 'Anpfiff';
