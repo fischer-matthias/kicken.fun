@@ -1,6 +1,10 @@
 <mat-toolbar class="fixed-header" color="primary">
   <mat-toolbar-row>
     <span>kicken.fun</span>
+    <span class="spacer"></span>
+    <button *ngIf="displayClose" mat-icon-button color="secondary" (click)="closePage()">
+      <mat-icon aria-label="close button">close</mat-icon>
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 

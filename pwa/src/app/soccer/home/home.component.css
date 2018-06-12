@@ -8,4 +8,8 @@
     left: 0;
     z-index: 2;
     width: 100%  !important;
-  }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
