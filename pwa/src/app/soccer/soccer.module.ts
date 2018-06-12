@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
         MatToolbarModule, MatCardModule, MatButtonModule, MatSelectModule,
-        MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule
+        MatDividerModule, MatListModule, MatAutocompleteModule, MatInputModule, MatDialogModule, MatIconModule
       } from '@angular/material';
 
 // provide services
@@ -46,6 +46,7 @@ export const soccerRoutes = [
     RouterModule.forRoot(soccerRoutes, {useHash: true}),
     HttpClientModule,
 
+    MatIconModule,
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
