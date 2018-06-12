@@ -1,16 +1,15 @@
-import { GameOfflineStorageService } from './../game-offline-storage.service';
 import { Component, OnInit } from '@angular/core';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { debounceTime } from 'rxjs/operators';
-
-import { TeamsOfflineStorageService } from '../teams-offline-storage.service';
-import { TeamService } from '../team.service';
-
-import { Team } from '../models/team';
-import { StoredTeam } from '../models/stored-team';
 import { Game } from '../models/game';
+import { GameOfflineStorageService } from './../game-offline-storage.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { Router } from '@angular/router';
+import { StoredTeam } from '../models/stored-team';
+import { Team } from '../models/team';
+import { TeamService } from '../team.service';
+import { TeamsOfflineStorageService } from '../teams-offline-storage.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'soccer-club-selection',
@@ -32,7 +31,7 @@ export class ClubSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.teamsOfflineStorage.getStoredTeams().subscribe(storedTeams => this.previousTeams = storedTeams);
-    this.gameOfflineStorage.getStoredGames().subscribe(storedGames => this.previousGames = storedGames);
+    this.gameOfflineStorage.getStoredGames().subscribe(storedGames => this.previousGames = this.mapGames(storedGames));
 
     this.searchTerm.valueChanges
     .pipe(debounceTime(400))
@@ -73,4 +72,21 @@ export class ClubSelectionComponent implements OnInit {
     return team ? team.name : undefined;
   }
 
+  private mapGames(games: Game[]): Game[] {
+    const mappedGames: Game[] = [];
+
+    games.forEach((game: Game) => {
+      for (let i = 0; i < this.previousTeams.length; i++) {
+        if (this.previousTeams[i].team.value === game.teamId) {
+          game.team = this.previousTeams[i].team;
+          mappedGames.push(game);
+          break;
+        }
+      }
+    });
+
+    return mappedGames;
+  }
+
 }
+
