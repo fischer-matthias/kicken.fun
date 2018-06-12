@@ -86,11 +86,8 @@ export class GameOverviewComponent implements OnInit, OnDestroy {
         this.timeStatusSubscrtiption = this.timeService.getTimeStatusSubject().subscribe((gameStatus: GameStatus) => {
 
           this.gameStatus = gameStatus;
-
-          if (this.gameStatus.runFlag) {
-            this.second = 0;
-            this.getTimeInSeconds();
-          }
+          this.second = 0;
+          this.getTimeInSeconds();
         });
       }
     });
