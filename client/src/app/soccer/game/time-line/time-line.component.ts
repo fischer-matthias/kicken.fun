@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
 })
 export class TimeLineComponent implements OnDestroy {
 
-  public timeLineItems: TimeLineItem[] = [];
   private timeLineSubscription: Subscription;
+  public timeLineItems: TimeLineItem[] = [];
 
   constructor(private timeLineService: TimeLineService) {
     this.timeLineSubscription = this.timeLineService.getSubject().subscribe((timeLineItem: TimeLineItem) => {
