@@ -1,7 +1,7 @@
 <mat-card class="soccer-card search-card">
-  <mat-card-header>
-    <h1>Teamauswahl</h1>
-  </mat-card-header>
+  <mat-card-title>
+      Teamauswahl
+  </mat-card-title>
   <mat-card-content>
 
     <mat-form-field class="full-width">
@@ -21,9 +21,9 @@
 </mat-card>
 
 <mat-card *ngIf="previousGames.length > 0" class="soccer-card previous-teams">
-  <mat-card-header>
-    <h1>Vorherige Spiele</h1>
-  </mat-card-header>
+  <mat-card-title>
+      Vorherige Spiele
+  </mat-card-title>
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let game of previousGames | reverse" (click)="startGameWithPreviousGame(game)">
@@ -34,9 +34,9 @@
 </mat-card>
 
 <mat-card *ngIf="previousTeams.length > 0" class="soccer-card previous-teams">
-  <mat-card-header>
-    <h1>Vorherige Teams</h1>
-  </mat-card-header>
+    <mat-card-title>
+        Vorherige Teams
+    </mat-card-title>
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let team of previousTeams | reverse" (click)="startGameWithPreviousTeam(team)">
