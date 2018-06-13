@@ -39,3 +39,11 @@
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
+
+.soccer-card {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 8px;
+    text-align: left;
+}
