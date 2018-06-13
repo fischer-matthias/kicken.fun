@@ -25,6 +25,7 @@ import { HomeComponent } from './home/home.component';
 import { ClubSelectionComponent } from './club-selection/club-selection.component';
 import { GameOverviewComponent } from './game/game-overview.component';
 import { TimePipe } from './time.pipe';
+import { ReversePipe } from './reverse.pipe';
 import { PlayerSelectionDialog } from './game/player-selection-dialog/player-selection-dialog.component';
 import { TimeLineComponent } from './game/time-line/time-line.component';
 
@@ -57,7 +58,7 @@ export const soccerRoutes = [
     MatDialogModule
   ],
   entryComponents: [PlayerSelectionDialog],
-  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe, PlayerSelectionDialog, TimeLineComponent],
+  declarations: [HomeComponent, ClubSelectionComponent, GameOverviewComponent, TimePipe, ReversePipe, PlayerSelectionDialog, TimeLineComponent],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     TeamService,
