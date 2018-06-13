@@ -1,6 +1,6 @@
 {
   "name": "kicken.fun-server",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "description": "kicken.fun is able to record information of a soccer game.",
   "license": "MIT",
   "main": "index.js",
