@@ -11,7 +11,8 @@ describe('club-crawler', () => {
         clubCrawler.findClub('FC Talge')
             .then((result) => {
                 result.should.not.equal([]);
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 //
             });
     });
@@ -20,8 +21,9 @@ describe('club-crawler', () => {
         clubCrawler.findClub('FC Talge')
         .then((result) => {
             result[0]['club_name'].should.be.equal('FC Talge');
-        }).catch((error) => {
+        })
+        .catch((error) => {
             //
         });
     });
-})
+});
