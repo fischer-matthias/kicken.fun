@@ -6,7 +6,8 @@ node_js:
 # cache dependencies
 cache:
   directories:
-    - ./pwa/node_modules
+    - ./client/node_modules
+    - ./server/node_modules
 
 # log some version information
 before_install:
@@ -16,7 +17,9 @@ before_install:
 
 # install dependencies
 install:
-  - cd pwa
+  - cd client
+  - npm i
+  - cd ../server
   - npm i
 
 # log some version information
@@ -27,4 +30,7 @@ before_script:
 
 # build the pwa
 script:
+  - cd ../client
   - npm run build --prod
+  - cd ../server
+  - npm run test
