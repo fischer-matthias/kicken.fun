@@ -6,11 +6,12 @@
     </div>
   </mat-card-content>
   <mat-card-actions *ngIf="!gameStatus.endFlag">
-    <button *ngIf="!gameStatus.endFlag" mat-button (click)="switchStatus()">{{gameStatus.statusString}}</button>
-    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(true)">Tor</button>
-    <button *ngIf="gameStatus.runFlag" mat-button (click)="addGoal()">Gegentor</button>
-    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, true)">Gelbe Karte</button>
-    <button *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, false, true)">Rote Karte</button>
+    <button class="overview-button" *ngIf="gameStatus.runFlag" mat-button (click)="switchStatus()"><mat-icon>pause_circle_outline</mat-icon></button>
+    <button class="overview-button" *ngIf="!gameStatus.runFlag" mat-button (click)="switchStatus()"><mat-icon>play_circle_outline</mat-icon></button>
+    <button class="overview-button" *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(true)"><img class="icon icon-home" src="assets/icons/football-home.png"/></button>
+    <button class="overview-button" *ngIf="gameStatus.runFlag" mat-button (click)="addGoal()"><img class="icon icon-enemy" src="assets/icons/football-enemy.png"/></button>
+    <button class="overview-button" *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, true)"><img class="icon icon-home" src="assets/icons/card-yellow.png"/></button>
+    <button class="overview-button" *ngIf="gameStatus.runFlag" mat-button (click)="selectPlayerFor(false, false, true)"><img class="icon icon-home" src="assets/icons/card-red.png"/></button>
   </mat-card-actions>
 </mat-card>
 
