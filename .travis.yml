@@ -17,30 +17,27 @@ before_install:
 # install dependencies
 install:
   - cd client
-  - ls -la
   - npm i
-  
+
   - cd ..
   - ls -la
 
   - cd server
-  - ls -la
   - npm i
+  - cd ..
 
 # log some version information
 before_script:
   - node --version
   - npm --version
-  - ls -la
 
 # build the pwa
 script:
   - cd ..
-  - ls -la
 
   - cd client
   - ls -la
-  - npm run build --prod
+  - ./node_modules/@angular/cli/bin/ng build --prod
 
   - cd ..
   - ls -la
