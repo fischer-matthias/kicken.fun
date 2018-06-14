@@ -3,12 +3,6 @@ language: node_js
 node_js:
   - "node"
 
-# cache dependencies
-cache:
-  directories:
-    - ./client/node_modules
-    - ./server/node_modules
-
 # log some version information
 before_install:
   - node --version
@@ -37,7 +31,7 @@ script:
 
   - cd client
   - ls -la
-  - ./node_modules/@angular/cli/bin/ng build --prod
+  - npm run build --prod
 
   - cd ..
   - ls -la
