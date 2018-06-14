@@ -26,4 +26,8 @@ export class PlayerService {
     return playerSubject;
   }
 
+  public getTeamName(teamID: string): string {
+    return this.offlineStorage.getTeamName(teamID);
+  }
+
 }

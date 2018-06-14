@@ -54,6 +54,17 @@ export class TeamsOfflineStorageService {
     }
   }
 
+  public getTeamName(teamID: string): string {
+    for (let i = 0; i < this.teams.length; i++) {
+      if (this.teams[i].team.value === teamID) {
+        return this.teams[i].team.club_name;
+      }
+    }
+
+    console.error('Team ' + teamID + ' not found!');
+    return '';
+  }
+
   private isTeamAvailable(team: Team): boolean {
 
     let isAvailable = false;

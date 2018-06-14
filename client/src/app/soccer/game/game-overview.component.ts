@@ -24,7 +24,9 @@ import { CardService } from '../game/card.service';
 })
 export class GameOverviewComponent implements OnInit, OnDestroy {
 
-  public team: string;
+  public teamId: string;
+  public teamName: string = 'Freund';
+
   public players: Player[];
   public stats: Stats = new Stats();
   public gameStatus: GameStatus = new GameStatus();
@@ -66,14 +68,16 @@ export class GameOverviewComponent implements OnInit, OnDestroy {
 
     this.subscribeResetSubject();
 
-    this.team = params.team;
+    this.teamId = params.team;
     this.loadPlayers();
 
     if (params.gameId) {
       this.gameService.loadGameById(params.gameId);
     } else {
-      this.gameService.generateGame(this.team);
+      this.gameService.generateGame(this.teamId);
     }
+
+    this.teamName = this.playerService.getTeamName(this.teamId);
   }
 
   private subscribeResetSubject(): void {
@@ -94,7 +98,7 @@ export class GameOverviewComponent implements OnInit, OnDestroy {
   }
 
   private loadPlayers(): void {
-    this.playerService.getPlayers(this.team)
+    this.playerService.getPlayers(this.teamId)
       .subscribe(data => {
         this.players = data as Player[];
       });
