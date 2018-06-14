@@ -1,0 +1,47 @@
+<mat-card class="soccer-card search-card">
+  <mat-card-title>
+      Teamauswahl
+  </mat-card-title>
+  <mat-card-content>
+
+    <mat-form-field class="full-width">
+      <input type="text" placeholder="Teamname" aria-label="Number" matInput [formControl]="searchTerm" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectTeam($event)">
+        <mat-option *ngFor="let team of teams" [value]="team">
+          {{ team.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="!selectedTeam" mat-button disabled>Auswählen</button>
+    <button *ngIf="selectedTeam" mat-button (click)="startGame()">Auswählen</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="previousGames.length > 0" class="soccer-card previous-teams">
+  <mat-card-title>
+      Vorherige Spiele
+  </mat-card-title>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let game of previousGames | reverse" (click)="startGameWithPreviousGame(game)">
+        <h4 mat-line>{{game?.team?.name}} {{game?.stats?.own}} : {{game?.stats?.enemy}}</h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="previousTeams.length > 0" class="soccer-card previous-teams">
+    <mat-card-title>
+        Vorherige Teams
+    </mat-card-title>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let team of previousTeams | reverse" (click)="startGameWithPreviousTeam(team)">
+        <h4 mat-line>{{team?.team?.name}}</h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

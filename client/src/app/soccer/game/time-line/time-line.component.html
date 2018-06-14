@@ -1,0 +1,18 @@
+<mat-card *ngIf="timeLineItems.length > 0" class="soccer-card">
+  <mat-card-content>
+    <mat-list>
+      <mat-divider></mat-divider>
+      <div *ngFor="let item of timeLineItems | reverse">
+        <mat-list-item>
+          <h4 *ngIf="item?.player" mat-line>{{item?.time | soccerTime}} &nbsp;&nbsp;&nbsp;&nbsp; {{item?.player?.vorname}} {{item?.player?.nachname}}</h4>
+          <h4 *ngIf="!item?.player" mat-line>{{item?.time | soccerTime}} &nbsp;&nbsp;&nbsp;&nbsp; Gegner</h4>
+          <h4 *ngIf="item?.goal"><img class="icon icon-goal" src="assets/icons/football-basic.png"/></h4>
+          <h4 *ngIf="item?.card && item.yellow"><img class="icon icon-card-yellow" src="assets/icons/card-yellow.png"/></h4>
+          <h4 *ngIf="item?.card && item.yellowRed"><img class="icon icon-card-yellow-red" src="assets/icons/card-yellow-red.png"/></h4>
+          <h4 *ngIf="item?.card && item.red"><img class="icon icon-card-red" src="assets/icons/card-red.png"/></h4>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </div>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

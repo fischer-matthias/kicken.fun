@@ -3,28 +3,39 @@ language: node_js
 node_js:
   - "node"
 
-# cache dependencies
-cache:
-  directories:
-    - ./pwa/node_modules
-
 # log some version information
 before_install:
   - node --version
   - npm --version
-  - ls -la
 
 # install dependencies
 install:
-  - cd pwa
+  - cd client
   - npm i
+
+  - cd ..
+  - ls -la
+
+  - cd server
+  - npm i
+  - cd ..
 
 # log some version information
 before_script:
   - node --version
   - npm --version
-  - ls -la
 
 # build the pwa
 script:
+  - ls -la
+
+  - cd client
+  - ls -la
   - npm run build --prod
+
+  - cd ..
+  - ls -la
+
+  - cd server
+  - ls -la
+  - npm run test

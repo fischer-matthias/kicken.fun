@@ -1,0 +1,17 @@
+.score-board {
+    margin-top: 72px;
+}
+
+.player-list {
+    margin-top: 8px;
+}
+
+.overview-button {
+    width: 64px;
+    min-width: 64px;
+}
+
+.icon {
+    height: 24px;
+    width: 24px;
+}
