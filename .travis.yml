@@ -33,7 +33,7 @@ before_script:
 
 # build the pwa
 script:
-  - cd ..
+  - ls -la
 
   - cd client
   - ls -la
