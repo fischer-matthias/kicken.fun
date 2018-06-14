@@ -13,13 +13,18 @@ cache:
 before_install:
   - node --version
   - npm --version
-  - ls -la
 
 # install dependencies
 install:
   - cd client
+  - ls -la
   - npm i
-  - cd ../server
+  
+  - cd ..
+  - ls -la
+
+  - cd server
+  - ls -la
   - npm i
 
 # log some version information
@@ -30,7 +35,16 @@ before_script:
 
 # build the pwa
 script:
-  - cd ../client
+  - cd ..
+  - ls -la
+
+  - cd client
+  - ls -la
   - npm run build --prod
-  - cd ../server
+
+  - cd ..
+  - ls -la
+
+  - cd server
+  - ls -la
   - npm run test
